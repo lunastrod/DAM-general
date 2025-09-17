@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Editar>    
+    <mensaje>
+        <remitente>
+            <nombre>Mi nombre</nombre>
+            <email>minombre@gmail.com</email>
+        </remitente>
+        <destinatario>
+            <nombre>Mi nombre</nombre>
+            <email>minombre@gmail.com</email>
+        </destinatario>
+        <texto>
+            <asunto>Asunto del correo electronico</asunto>
+            <parrafo>Contenido del email</parrafo>
+        </texto>
+    </mensaje>
+</Editar>
