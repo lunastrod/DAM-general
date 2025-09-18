@@ -1,0 +1,98 @@
+Escribe el pseudocódigo correspondiente al
+siguiente algoritmo que indica, a partir de un número
+dado, si éste es par o impar.
+1. Pedir el número
+2. Dividir el número dado entre 2 y recoger el resto
+3. Comprobar si el resto es 0 en cuyo caso se
+indicará que el número es par o, si por el
+contrario, el resto es diferente de 0, se indicará
+que es impar.
+
+
+    LEER n
+    r=n%2
+    if r == 0
+        mostrar "es par"
+    else
+        mostrar "es impar"
+    endif
+
+
+
+Escribe el pseudocódigo correspondiente al siguiente
+algoritmo que indica, a partir de una cantidad de horas,
+minutos y segundos, los segundos equivalentes.
+1. Pedir el número de horas.
+2. Pedir el número de minutos.
+3. Pedir el número de segundos.
+4. Multiplicar las horas por 3600.
+5. Multiplicar los minutos por 60.
+6. Sumar los resultados de las dos operaciones
+anteriores y los segundos iniciales.
+7. Mostrar el resultado por pantalla.
+
+    LEER horas
+    LEER minutos
+    LEER segundos
+    segundos=horas*3600+minutos*60+segundos
+    MOSTRAR segundos
+
+
+
+
+
+
+
+Escribe el pseudocódigo correspondiente al siguiente algoritmo
+que indica, a partir de un precio inicial y un porcentaje de
+descuento, el precio final de un producto.
+1. Pedir el precio inicial
+2. Pedir el porcentaje de descuento
+3. Calcular descuento, que es el resultado de dividir entre 100 el
+producto entre el precio inicial y el porcentaje de descuento.
+4. Rebajar el precio inicial con el descuento calculado y mostrarlo
+por pantalla.
+El programa preguntará al usuario, antes de finalizar, si desea
+repetir el cálculo con otras cifras y, en caso afirmativo, volverá al
+comienzo.
+
+    REPETIR
+        LEER precio
+        LEER descuento
+        precio_descuento=precio*descuento/100
+        precio_descuento=precio-precio_descuento
+        MOSTRAR precio_descuento
+        MOSTRAR "¿desea repetir el cálculo con otras cifras?"
+        LEER texto_usuario
+    MIENTRAS texto usuario=="si"
+
+
+
+
+
+Escribe el pseudocódigo correspondiente al siguiente algoritmo que indica,
+a partir de unos alumnos y notas introducidas, la nota final para cada
+alumno y % de aprobados.
+1. Pedir número de alumnos
+2. Para cada alumno,
+3. Pedir Nombre y nota
+4. Calcular nota final correspondiente a cada nota introducida.
+5. Mostrar la nota final del alumno.
+6. Calcular porcentaje de aprobados.
+7. Mostrar porcentaje.
+La nota final se calculará en función de la siguiente tabla:
+- Nota menor que 5 – Suspenso
+- Nota mayor o igual que 5 o menor que 6 – Suficiente
+- Nota mayor o igual que 6 o menor que 7 – Bien
+- Nota mayor o igual que 7 o menor que 9 - Notable
+- Nota mayor o igual que 9 o menor o igual que 10 - Sobresaliente
+
+
+
+    LEER n_alumnos
+    PARA alumno EN n_alumnos
+        LEER nombre
+        LEER nota
+        
+
+

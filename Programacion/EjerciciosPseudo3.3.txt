@@ -1,0 +1,53 @@
+Daniel Parra Segovia
+
+Ejercicio 1. Especificar un algoritmo con pseudocódigo que se encargue de calcular y mostrar
+el área de un triángulo para la altura y la base dadas.
+
+DECLARAR area
+DECLARAR altura
+DECLARAR base
+LEER altura
+LEER base
+area=base*altura/2
+MOSTRAR area
+
+
+===============
+
+Ejercicio 2. Especificar un algoritmo con pseudocódigo que se encargue de, en función del
+valor de los tres lados de un triángulo facilitados, indicar si el triángulo es equilátero, isósceles
+o escaleno.
+
+DECLARAR lado1
+DECLARAR lado2
+DECLARAR lado3
+LEER lado1
+LEER lado2
+LEER lado3
+IF lado1==lado2==lado3
+    MOSTRAR "equilátero"
+ELSEIF lado1!=lado2!=lado3
+    MOSTRAR "escaleno"
+ELSE
+    MOSTRAR "isósceles"
+ENDIF
+
+
+============
+
+Ejercicio 3. Especificar un algoritmo con pseudocódigo que se encargue de calcular y mostrar
+la suma de los n primeros números naturales.
+
+DECLARAR n
+DECLARAR resultado
+LEER n
+WHILE n>0
+    resultado=resultado+n
+    n=n-1
+MOSTRAR resultado
+END
+    
+
+
+
+

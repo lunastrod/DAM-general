@@ -17,6 +17,7 @@ class rocket:
         self.angle=0
         self.dt=1
         self.screen_size=[500,500]
+        self.pixel_radius=5
     def step(self):
         self.angle=self.angle+self.w
         self.v=[self.v[0]+self.a[0]*self.dt,self.v[1]+self.a[1]*self.dt]
@@ -62,6 +63,7 @@ class Asteroid():
         self.a=[0,0]
         self.dt=1
         self.t.shape("circle")
+        self.pixel_radius=30
     def step(self):
         self.v=[self.v[0]+self.a[0]*self.dt,self.v[1]+self.a[1]*self.dt]
         self.p=[self.p[0]+self.v[0]*self.dt,self.p[1]+self.v[1]*self.dt]
@@ -70,13 +72,22 @@ class Asteroid():
         self.a=[0,0]
     def checkborders(self):
         if(self.p[0]<-self.screen_size[0]):
-            self.p[0]=self.screen_size[0]-1
+            self.p[0]=self.screen_size[0]-
         if(self.p[0]>self.screen_size[0]):
             self.p[0]=-self.screen_size[0]+1
         if(self.p[1]<-self.screen_size[1]):
             self.p[1]=self.screen_size[1]-1
         if(self.p[1]>self.screen_size[1]):
             self.p[1]=-self.screen_size[1]+1
+    def checkcollision(self,r):
+        min_distance=self.pixel_radius+r.pixel_radius
+        distance=math.sqrt((r.p[0]-self.p[0])**2+(r.p[1]-self.p[1])**2)
+        if(distance<min_distance):
+            self.t.color("red")
+        elif((distance-30)<min_distance):
+            self.t.color("yellow")
+        else:
+            self.t.color("black")
 
 r=rocket()
 asteroids=[]
@@ -91,5 +102,6 @@ while True:
     r.step()
     for a in asteroids:
         a.step()
+        a.checkcollision(r)
     screen.listen()
     #time.sleep(0.01)
