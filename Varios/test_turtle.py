@@ -72,7 +72,7 @@ class Asteroid():
         self.a=[0,0]
     def checkborders(self):
         if(self.p[0]<-self.screen_size[0]):
-            self.p[0]=self.screen_size[0]-
+            self.p[0]=self.screen_size[0]-1
         if(self.p[0]>self.screen_size[0]):
             self.p[0]=-self.screen_size[0]+1
         if(self.p[1]<-self.screen_size[1]):
