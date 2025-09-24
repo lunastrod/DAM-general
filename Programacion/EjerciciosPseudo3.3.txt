@@ -46,8 +46,105 @@ WHILE n>0
     n=n-1
 MOSTRAR resultado
 END
-    
+
+
+Ejercicio 4. Especificar un algoritmo con pseudocódigo que se encargue de calcular y mostrar
+la suma de los diez primeros números entre 1 y 1000 que sean divisibles por uno dado.
+
+DECLARAR divisor, contador, numerosSumados, resultado, CANTIDAD, MAXIMO
+CANTIDAD=10
+MAXIMO=1000
+LEER divisor
+contador=0
+numerosSumados=0;
+resultado=0;
+WHILE contador <MAXIMO and numerosSumados<CANTIDAD
+    IF contador%divisor==0
+        resultado=resultado+contador
+        numerosSumados=numerosSumados+1
+    contador=contador+1
+PRINT resultado
+
+Ejercicio 5. Realiza el pseudocódigo para el siguiente programa: Un aspirante a un empleo,
+realiza un test de capacitación. Se obtiene la siguiente información: cantidad total de
+preguntas que se le realizaron y la cantidad de preguntas que contestó correctamente. El
+programa solicita los dos datos por teclado e informa el nivel según el porcentaje de
+respuestas correctas que ha obtenido sabiendo que:
+• Nivel sobresaliente: Porcentaje>=90%
+• Nivel notable: Porcentaje>=75% y <90%
+• Nivel suficiente: Porcentaje>=50% y <75%
+• Nivel insuficiente: Porcentaje<50%
+
+DECLARAR totalPreguntas
+DECLARAR preguntasCorrectas
+LEER totalPreguntas
+LEER preguntasCorrectas
+IF totalPreguntas/preguntasCorrectas>=0.9
+    PRINT "sobresaliente"
+IF totalPreguntas/preguntasCorrectas>=0.75
+    PRINT "notable"
+IF totalPreguntas/preguntasCorrectas>=0.5
+    PRINT "suficiente"
+ELSE
+    PRINT "insuficiente"
+
+Ejercicio 6. Realiza el pseudocódigo para un programa que lea los lados de n triángulos, e
+informe:
+• De cada uno de ellos, qué tipo de triángulo es:
+i. equilátero (tres lados iguales),
+ii. isósceles (dos lados iguales),
+iii. o escaleno (ningún lado igual)
+• Cantidad de triángulos de cada tipo.
+
+DECLARAR n
+DECLARAR lado1
+DECLARAR lado2
+DECLARAR lado3
+DECLARAR isosceles
+DECLARAR equilatero
+DECLARAR escaleno
+isosceles=0
+equilatero=0
+escaleno=0
+LEER n
+WHILE n<=0
+    n=n-1
+    LEER lado1
+    LEER lado2
+    LEER lado3
+    IF lado1==lado2 and lado2==lado3
+        MOSTRAR "equilátero"
+        equilatero=equilatero+1
+    ELSEIF lado1!=lado2! and lado2!=lado3 and lado3!=lado1
+        MOSTRAR "escaleno"
+        escaleno=escaleno+1
+    ELSE
+        MOSTRAR "isósceles"
+        isosceles=isosceles+1
+    ENDIF
+PRINT "equilateros" equilatero "isosceles" isosceles "escalenos" escaleno
 
 
 
+Ejercicio 7. Realiza el pseudocódigo para un programa que solicite 10 valores enteros distintos
+de cero por teclado y que indique cuántos valores son positivos, cuántos son negativos e
+impares y cuál es el menor valor de los introducidos.
 
+DECLARAR CANTIDAD=10
+DECLARAR n
+DECLARAR contador=0
+DECLARAR negativosImpares=0
+DECLARAR positivos=0
+DECLARAR menor=NUMERO_ENORME
+
+WHILE contador <10
+    LEER n
+    IF n<menor
+        menor=n
+    IF n==0
+        PRINT "no valido"
+    IF n>0
+        positivos=positivos+1
+    IF n<0 and n%2==1
+        negativosImpares=negativosImpares+1
+PRINT "numero menor" menor "positivos" positivos "negativos impares" negativosImpares
