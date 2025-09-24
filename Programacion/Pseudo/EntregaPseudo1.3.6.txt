@@ -1,0 +1,35 @@
+Ejercicio 6. Realiza el pseudocódigo para un programa que lea los lados de n triángulos, e
+informe:
+• De cada uno de ellos, qué tipo de triángulo es:
+i. equilátero (tres lados iguales),
+ii. isósceles (dos lados iguales),
+iii. o escaleno (ningún lado igual)
+• Cantidad de triángulos de cada tipo.
+
+DECLARAR n
+DECLARAR lado1
+DECLARAR lado2
+DECLARAR lado3
+DECLARAR isosceles
+DECLARAR equilatero
+DECLARAR escaleno
+isosceles=0
+equilatero=0
+escaleno=0
+LEER n
+WHILE n<=0
+    n=n-1
+    LEER lado1
+    LEER lado2
+    LEER lado3
+    IF lado1==lado2 and lado2==lado3
+        MOSTRAR "equilátero"
+        equilatero=equilatero+1
+    ELSEIF lado1!=lado2! and lado2!=lado3 and lado3!=lado1
+        MOSTRAR "escaleno"
+        escaleno=escaleno+1
+    ELSE
+        MOSTRAR "isósceles"
+        isosceles=isosceles+1
+    ENDIF
+PRINT "equilateros" equilatero "isosceles" isosceles "escalenos" escaleno
