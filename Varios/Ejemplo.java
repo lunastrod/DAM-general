@@ -2,9 +2,8 @@ import java.util.Scanner;
 
 public class Ejemplo {
     public static void main(String[] args){
-        Scanner scanner = new Scanner(System.in);
-        System.out.print("\nhola\n");
-        String textoUsuario = scanner.nextLine();
-        System.out.print(textoUsuario+"\n");
+        int entero;//declaración
+        entero=1;//inicialización
+        int otroEntero=2;//declaración e inicialización
     }
 }

@@ -9,6 +9,7 @@ public class SimpleCircle extends JPanel {
     static int screeny=1000;
     private ArrayList<Asteroid> asteroids = new ArrayList<>();
     private Rocket rocket = new Rocket(screenx, screeny);
+    private ArrayList<Bullet> bullets = new ArrayList<>();
     HashSet<Character> keys = new HashSet<>();
 
     public SimpleCircle(JFrame f) {
@@ -32,11 +33,17 @@ public class SimpleCircle extends JPanel {
                 o.step();
             }
             rocket.step(keys.contains('W'), keys.contains('A'), keys.contains('D'));
+            for(Bullet b: bullets){
+                b.step();
+                if(b.life<=0){
+                    bullets.remove(b);
+                }
+            }
         }).start();
         setupKeyBind("W",'W');
         setupKeyBind("D",'D');
         setupKeyBind("A",'A');
-
+        setupKeyBind("SPACE",' ');
     }
 
     private void setupKeyBind(String name, char c){
@@ -69,6 +76,9 @@ public class SimpleCircle extends JPanel {
             o.draw(g);
         }
         rocket.draw(g);
+        for(Bullet b: bullets){
+            b.draw(g);
+        }
         //System.out.println(keys);
     }
 
@@ -129,18 +139,27 @@ class ScreenObject{
     }
 
     public void checkBorders(){
+        int THRESHOLD=20;
         if(px<0){
-            px=screenx/zoom;
+            px=screenx/zoom-THRESHOLD;
         }
         if(py<0){
-            py=screeny/zoom;
+            py=screeny/zoom-THRESHOLD;
         }
-        if(px>screenx/zoom){
+        if(px>screenx/zoom-THRESHOLD){
             px=0;
         }
-        if(py>screeny/zoom){
+        if(py>screeny/zoom-THRESHOLD){
             py=0;
         }
+    }
+
+    public boolean touching(ScreenObject o){
+        int dx=pixelx-o.pixelx;
+        int dy=pixely-o.pixely;
+        int distanceSquared=dx*dx+dy*dy;
+        int radiusSum=(sx/2)+(o.sx/2);
+        return distanceSquared<radiusSum*radiusSum;
     }
 
     public void draw(Graphics g){
@@ -158,14 +177,6 @@ class Asteroid extends ScreenObject{
         py=Math.random()*screeny/zoom;
         vx=Math.random()*2-1;
         vy=Math.random()*2-1;
-        
-    }
-}
-
-class Missile extends ScreenObject{
-    Missile(int screensizex,int screensizey,double startvx,double startvy){
-        super(screensizex, screensizey);
-
     }
 }
 
@@ -174,7 +185,7 @@ class Rocket extends ScreenObject{
         super(screensizex,screensizey);
         color=Color.getHSBColor(0.10f, 1.0f, 0.75f);
     }
-    public void step(boolean forward, boolean left, boolean right){
+    public void step(boolean forward, boolean left, boolean right, boolean shoot){
         if(forward){
             double strength=0.1;
             ax=Math.cos(Math.toRadians(angle))*strength;
@@ -188,10 +199,35 @@ class Rocket extends ScreenObject{
             double strength=0.2;
             w+=strength*dt;
         }
+        if(shoot){
+            //create bullet
+            //bullets.add(new Bullet(screenx, screeny, vx, vy, angle));
+        }
         super.step();
     }
     public void draw(Graphics g){
         g.setColor(color);
         g.fillArc(pixelx, pixely, sx, sy, 180-((int)angle)-25, 50);
+    }
+}
+
+class Bullet extends ScreenObject{
+    int life;
+    Bullet(int screensizex,int screensizey,double startvx,double startvy, double bulletAngle){
+        super(screensizex, screensizey);
+        angle=bulletAngle;
+        color=Color.YELLOW;
+        sx=3;
+        sy=3;
+        //set velocity
+        double BULLETSPEED=5;
+        vx=startvx+BULLETSPEED*Math.cos(Math.toRadians(angle));
+        vy=startvy+BULLETSPEED*Math.sin(Math.toRadians(angle));
+        //set life timer
+        life=1000;
+    }
+    public void step(){
+        super.step();
+        life--;
     }
 }
