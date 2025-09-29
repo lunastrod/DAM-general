@@ -1,1 +1,3 @@
 Sistema informatico: elementos comunicados entre sí, por ejemplo usuario>software>hardware>router>router>hardware>software>usuario
+
+JUEVES 9 PRESENTACION

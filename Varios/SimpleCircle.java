@@ -9,7 +9,6 @@ public class SimpleCircle extends JPanel {
     static int screeny=1000;
     private ArrayList<Asteroid> asteroids = new ArrayList<>();
     private Rocket rocket = new Rocket(screenx, screeny);
-    private ArrayList<Bullet> bullets = new ArrayList<>();
     HashSet<Character> keys = new HashSet<>();
 
     public SimpleCircle(JFrame f) {
@@ -32,13 +31,7 @@ public class SimpleCircle extends JPanel {
             for (Asteroid o : asteroids) {
                 o.step();
             }
-            rocket.step(keys.contains('W'), keys.contains('A'), keys.contains('D'));
-            for(Bullet b: bullets){
-                b.step();
-                if(b.life<=0){
-                    bullets.remove(b);
-                }
-            }
+            rocket.step(keys.contains('W'), keys.contains('A'), keys.contains('D'), keys.contains(' '));
         }).start();
         setupKeyBind("W",'W');
         setupKeyBind("D",'D');
@@ -76,9 +69,6 @@ public class SimpleCircle extends JPanel {
             o.draw(g);
         }
         rocket.draw(g);
-        for(Bullet b: bullets){
-            b.draw(g);
-        }
         //System.out.println(keys);
     }
 
@@ -181,6 +171,7 @@ class Asteroid extends ScreenObject{
 }
 
 class Rocket extends ScreenObject{
+    private ArrayList<Bullet> bullets = new ArrayList<>();
     Rocket(int screensizex,int screensizey){
         super(screensizex,screensizey);
         color=Color.getHSBColor(0.10f, 1.0f, 0.75f);
@@ -200,29 +191,45 @@ class Rocket extends ScreenObject{
             w+=strength*dt;
         }
         if(shoot){
-            //create bullet
-            //bullets.add(new Bullet(screenx, screeny, vx, vy, angle));
+            if(bullets.size()<500){//limit number of bullets
+                System.out.println(px+" "+py+" "+vx+" "+vy+" "+angle);
+                bullets.add(new Bullet(screenx, screeny, px, py, vx, vy, angle));
+            }
+        }
+        for (int i=bullets.size()-1; i>=0; i--) {
+            Bullet b = bullets.get(i);
+            b.step();
+            if(b.life<=0){
+                bullets.remove(i);
+            }
         }
         super.step();
     }
     public void draw(Graphics g){
         g.setColor(color);
         g.fillArc(pixelx, pixely, sx, sy, 180-((int)angle)-25, 50);
+        for(Bullet b: bullets){
+            b.draw(g);
+        }
     }
 }
 
 class Bullet extends ScreenObject{
     int life;
-    Bullet(int screensizex,int screensizey,double startvx,double startvy, double bulletAngle){
+    Bullet(int screensizex,int screensizey,double startx, double starty, double startvx,double startvy, double bulletAngle){
         super(screensizex, screensizey);
+        px=startx;
+        py=starty;
         angle=bulletAngle;
         color=Color.YELLOW;
         sx=3;
         sy=3;
         //set velocity
         double BULLETSPEED=5;
-        vx=startvx+BULLETSPEED*Math.cos(Math.toRadians(angle));
-        vy=startvy+BULLETSPEED*Math.sin(Math.toRadians(angle));
+        //vx=startvx+BULLETSPEED*Math.cos(Math.toRadians(angle));
+        //vy=startvy+BULLETSPEED*Math.sin(Math.toRadians(angle));
+        vx=0;
+        vy=0;
         //set life timer
         life=1000;
     }
