@@ -1,0 +1,9 @@
+# Ignore Eclipse temporary cache files
+**/.metadata/.plugins/org.eclipse.swt/EBWebView/Default/DawnGraphiteCache/*
+**/.metadata/.plugins/org.eclipse.swt/EBWebView/Default/DawnWebGPUCache/*
+**/.metadata/.log
+**/.metadata/.bak
+**/.metadata/.tmp
+# Ignore Eclipse-specific cache directories
+**/EBWebView/Default/DawnGraphiteCache/
+**/EBWebView/Default/DawnWebGPUCache/

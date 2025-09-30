@@ -11,8 +11,12 @@ public class Actividad1 {
 		System.out.println("Introduzca base y altura");
 		base = teclado.nextDouble();
 		altura = teclado.nextDouble();
-		area=base*altura/2;
+		area=calcularArea(base,altura);
 		System.out.println("Area:"+area);
 		teclado.close();
+	}
+	
+	public static double calcularArea(double b, double a) {
+		return b*a/2;
 	}
 }
