@@ -1,0 +1,9 @@
+Ensamblador:
+0 li A=[0,31]
+1 sta m[B]=A
+2 lda A=m[B]
+3 add A=A+B
+4 sub A=A-B
+5 jz if A==0 PC=B
+6
+7

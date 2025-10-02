@@ -12,11 +12,12 @@ public class Ejercicio2 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Introduce radio");
+		
 		String input=sc.nextLine();
 		double radio=Double.parseDouble(input);
+		
 		double area=radio*radio*PI;
 		System.out.println(area);
 		sc.close();
 	}
-
 }
