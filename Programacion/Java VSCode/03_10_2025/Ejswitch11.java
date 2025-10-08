@@ -7,7 +7,7 @@ correspondiente. Si introducimos otro número nos da un error.
 
 import java.util.Scanner;
 
-public class Ejswitch10 {
+public class Ejswitch11 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduzca el día de la semana (1-7)");

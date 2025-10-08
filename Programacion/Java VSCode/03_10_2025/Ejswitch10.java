@@ -12,7 +12,7 @@ mostrará el mensaje: “ERROR: número incorrecto.”
 
 import java.util.Scanner;
 
-public class Ejswitch11 {
+public class Ejswitch10 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduzca número del dado:");

@@ -7,7 +7,7 @@ número de días que tiene el mes correspondiente.
 
 import java.util.Scanner;
 
-public class Ejswitch10 {
+public class Ejswitch12 {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.println("Introduzca el número de mes");
