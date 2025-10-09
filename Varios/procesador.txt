@@ -7,3 +7,7 @@ Ensamblador:
 5 jz if A==0 PC=B
 6
 7
+
+Control bus:
+0    0    0    0    0    0    0    0
+                    RAMW -    B    A

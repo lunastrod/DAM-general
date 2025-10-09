@@ -8,5 +8,4 @@ Proceso Porcentaje
 	total<-mujeres+hombres;
 	resultado<-mujeres/total*100;
 	Escribir resultado,"%";
-	
 FinProceso
