@@ -17,7 +17,7 @@ public class Ej4 {
 		//99929 es primo
 		//99927 no es
 		
-		for(int i=2; i<Math.sqrt(n); i++) {
+		for(int i=2; i<=Math.sqrt(n); i++) {
 			if(n%i==0) {
 				esPrimo=false;
 				System.out.println("Encontrado divisor: "+ i);
