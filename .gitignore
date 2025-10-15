@@ -1,14 +1,1 @@
-# Ignore Eclipse temporary cache files
-**/.metadata/.plugins/org.eclipse.swt/EBWebView/Default/DawnGraphiteCache/*
-**/.metadata/.plugins/org.eclipse.swt/EBWebView/Default/DawnWebGPUCache/*
-**/.metadata/.log
-**/.metadata/.bak
-**/.metadata/.tmp
-# Ignore Eclipse-specific cache directories
-**/EBWebView/Default/DawnGraphiteCache/
-**/EBWebView/Default/DawnWebGPUCache/
-Programacion/eclipse-java-2025-09-R-win32-x86_64/eclipse/configuration/org.eclipse.osgi/.manager/.tmp4.instance
-Programacion/eclipse-java-2025-09-R-win32-x86_64/eclipse/configuration/org.eclipse.osgi/.manager/.tmp3.instance
-Programacion/eclipse-java-2025-09-R-win32-x86_64/eclipse/configuration/org.eclipse.osgi/.manager/.tmp2.instance
-Programacion/eclipse-java-2025-09-R-win32-x86_64/eclipse/configuration/org.eclipse.osgi/.manager/.tmp1.instance
-.vscode/settings.json
+Programacion\Workspaces\.metadata
