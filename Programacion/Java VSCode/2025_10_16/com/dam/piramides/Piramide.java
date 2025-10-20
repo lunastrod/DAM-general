@@ -20,6 +20,13 @@ public class Piramide {
         this.altura=a;
     }
 
+    public double getAltura() {
+        return altura;
+    }
+    public String getNombre() {
+        return nombre;
+    }
+
     public double calculaVolumen(){
         return lado*lado*altura/3;
     }

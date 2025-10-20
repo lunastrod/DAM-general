@@ -5,6 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "type": "java",
+            "name": "CompararPiramides",
+            "request": "launch",
+            "mainClass": "com.dam.piramides.main.CompararPiramides"
+        },
+        {
             "type": "msedge",
             "request": "launch",
             "name": "Open Horario.html",
