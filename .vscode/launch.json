@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Ej1",
+            "request": "launch",
+            "mainClass": "Ej1",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "CompararPiramides",
             "request": "launch",
             "mainClass": "com.dam.piramides.main.CompararPiramides"

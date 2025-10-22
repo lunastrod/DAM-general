@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <p>nombre</p>
+    <input type="text" name="nombre" />
+    <p>apellido</p>
+    <input type="text" name="apellido" />
+    <p>edad</p>
+    <input type="number" name="edad" />
+
+    <select name="ciudad">
+        <option value="madrid">Madrid</option>
+        <option value="barcelona">Barcelona</option>
+        <option value="valencia">Valencia</option>
+    </select>
+    <select name="ciudad2">
+        <optgroup label="Ciudades grandes">
+            <option value="madrid">Madrid</option>
+            <option value="barcelona">Barcelona</option>
+        </optgroup>
+        <optgroup label="Otras ciudades">
+            <option value="valencia">Valencia</option>
+            <option value="sevilla">Sevilla</option>
+        </optgroup>
+    </select>
+    <input type="checkbox" name="suscripcion" /> Suscribirse
+    <textarea name="comentarios" rows="4" cols="50">Escribe tus comentarios aquí...</textarea>
+    <input type="submit" value="Enviar" />
+    <input type="reset" value="Borrar" />
+
+    <!-- fieldsets-->
+    <form>
+        <fieldset>
+            <legend>Información personal</legend>
+            <p>Nombre:</p>
+            <input type="text" name="nombre" />
+            <p>Apellido:</p>
+            <input type="text" name="apellido" />
+        </fieldset>
+        <fieldset>
+            <legend>Preferencias</legend>
+            <input type="checkbox" name="suscripcion" /> Suscribirse
+        </fieldset>
+        <input type="submit" value="Enviar" />
+        <input type="reset" value="Borrar" />
+        <button type="button" onclick="alert('¡Hola!')">Haz clic aquí</button>
+        <!--♩♪♫♬-->
+        <button type="button"><img src="trumpet.gif" width="50" height="50" alt="Enviar" onclick="alert('♩♪♫♬')" /></button>
+    </form>
+    <!-- ficheros-->
+    <form>
+        <p>Sube tu archivo:</p>
+        <input type="file" name="archivo" />
+        <!--archivo txt-->
+        <input type="file" name="archivoTexto" accept=".txt" />
+        <input type="submit" value="Enviar" />
+    </form>
+    <!--datalist-->
+    <form>
+        <p>Elige tu navegador favorito:</p>
+        <input list="navegadores" name="navegador" />
+        <datalist id="navegadores">
+            <option value="Google Chrome" />
+            <option value="Mozilla Firefox" />
+            <option value="Microsoft Edge" />
+            <option value="Safari" />
+            <option value="Opera" />
+        </datalist>
+        <input type="submit" value="Enviar" />
+    </form>
+    <!--asociar etiquetas a cada campo-->
+    <form>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" />
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" name="apellido" />
+        <input type="submit" value="Enviar" />
+    </form>
+    <!--campos ocultos-->
+    <form>
+        <input type="hidden" name="usuarioID" value="12345" />
+        <p>Nombre:</p>
+        <input type="text" name="nombre" />
+        <input type="submit" value="Enviar" />
+    </form>
+</body>
+</html>
