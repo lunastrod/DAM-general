@@ -6,6 +6,12 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Ejercicio1",
+            "request": "launch",
+            "mainClass": "Ejercicio1"
+        },
+        {
+            "type": "java",
             "name": "Ej1",
             "request": "launch",
             "mainClass": "Ej1",
