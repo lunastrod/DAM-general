@@ -4,3 +4,4 @@ numpy
 bleak
 
 onvif-zeep
+ffmpeg-python

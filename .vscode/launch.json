@@ -22,6 +22,17 @@
             "request": "launch",
             "name": "Open Horario.html",
             "file": "c:\\Astrod\\Programacion\\DAM-general\\LenguajesMarcas\\Actividad2_DanielParraSegovia\\Horario.html"
+        },
+        {
+            "name": "Run camera_test.py (Custom CWD)",
+            "type": "python",
+            "request": "launch",
+            // 💡 Set the full path to the file you want to run
+            "program": "${workspaceFolder}/Varios/RaspiCam/camera_test.py", 
+            // 💡 Set the CWD to the directory containing the file
+            "cwd": "${workspaceFolder}/Varios/RaspiCam", 
+            "console": "integratedTerminal",
+            "justMyCode": true
         }
     ]
 }
