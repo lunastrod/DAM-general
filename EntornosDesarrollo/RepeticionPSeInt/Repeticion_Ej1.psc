@@ -1,5 +1,5 @@
 //@autor: Daniel Parra Segovia
-//@corrección:
+//@corrección:damaga
 //################################################################################
 //Crea una aplicación que pida un número y calcule su factorial (El factorial de
 //un número es el producto de todos los enteros entre 1 y el propio número y se
@@ -33,3 +33,4 @@ Algoritmo sin_titulo
 	FinPara
 	Escribir n,"! = ",factorial;
 FinAlgoritmo
+//Perfecto, muy lindo UwU
