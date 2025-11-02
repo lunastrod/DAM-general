@@ -1,5 +1,7 @@
 import Cam
 import TBot
+
+
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
 import time
@@ -25,8 +27,6 @@ class CameraBot(TBot.TBot):
                 await update.message.reply_photo(photo)
         except Exception as e:
             print(f"Error taking picture: {e}")
-
-    
 
 def main():
     t=CameraBot("Bot1","Camara1")

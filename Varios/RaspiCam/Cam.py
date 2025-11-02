@@ -87,6 +87,7 @@ class Cam:
             print(f"Error retrieving snapshot URI: {e}")
 
     def take_picture(self):
+        #pide video a la camara, el frame 0.5s despues es el que se guarda
         timestamp = datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
         filename = os.path.join(self.output_dir, f"image_{timestamp}.jpg")
         try:
