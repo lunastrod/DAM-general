@@ -1,13 +1,15 @@
 package com.dam.ejercicio2.main;
 
 public class Empleado {
-    private String nombre;
-    private String dni;//string para poder guardar mezcla de numeros y letras
-    private int numAnio;
     private static final int SALARIO_BASE=1200;
     private static final int AUMENTO_1=100;
     private static final int TRIENIOS_CAMBIO_AUMENTO=2;
     private static final int AUMENTO_2=150;
+    
+    private String nombre;
+    private String dni;//string para poder guardar mezcla de numeros y letras
+    private int numAnio;
+
 
     public Empleado(String nombre, String dni, int numAnio) {
         this.nombre = nombre;

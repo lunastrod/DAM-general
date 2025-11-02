@@ -36,23 +36,7 @@ class TBot:
             return
     
     def register_handlers(self):
-        self.bot.add_handler(CommandHandler("start", self.start))
-        self.bot.add_handler(CommandHandler("help", self.help))
-            
-    async def start(self,update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        """Send a message when the command /start is issued."""
-        user = update.effective_user
-        await update.message.reply_html(
-            f"Hola, {user.mention_html()}! soy un bot",
-        )
-
-    async def help(self,update: Update, context: ContextTypes.DEFAULT_TYPE) -> None:
-        """Send a message when the command /help is issued."""
-        user = update.effective_user
-        await update.message.reply_html(
-            f"Hola, {user.mention_html()}! soy un bot",
-        )
-
+        pass
 def main():
     t=TBot("Bot1")
     t.start_thread()
