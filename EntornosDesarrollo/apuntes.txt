@@ -1,0 +1,61 @@
+GIT
+config:
+    git config --global user.name <nombre y primer apellido>
+    git config --global user.email <email>
+    git config --global core.editor "nano"
+    #ver configuracion
+        git config --list
+
+ver:
+    UNTRACKED/STAGED
+        #ver cambios
+            git status
+    COMMIT
+        #ver commits
+            git log
+    CAMBIOS
+        #diferencias entre 2 commits
+            git diff hash1 hash2
+        #diferencias entre el directorio de trabajo y el área STAGED.
+            git diff
+
+
+nuevo repo:
+    git init
+
+hacer:
+    UNTRACKED
+        #añade cambios a staged
+            git add .
+    STAGED
+        #crea commit
+            git commit
+        #crea commit con mensaje
+            git commit -m "nombre de version"
+
+cambiar de commit:
+    #cambia a un commit
+        git checkout <hash-del-commit>
+    #cambia al commit mas reciente de una rama o a un commit con tag
+        git checkout <rama/tag>
+
+deshacer:
+    UNTRACKED
+        #los 2 deshacen cambios untracked
+            git restore
+            git checkout -- .
+    STAGED
+        #deshacen cambios staged
+            git restore --staged .
+            git reset
+    COMMIT
+        #deshacen el ultimo commit
+            git revert HEAD
+            git reset HEAD~1
+        #deshace el ultimo commit para editar su mensaje
+            git commit --amend
+
+adog: (esto sirve para ver las ramas de un repo mejor que con log)
+    git log --all --decorate --oneline --graph
+    git config --global alias.adog "log --all --decorate --oneline --graph"
+    git adog
