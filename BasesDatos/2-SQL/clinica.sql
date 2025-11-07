@@ -22,6 +22,7 @@ create table Pacientes(
 	telefono varchar(20),
     email varchar(100)
 );
+
 create table Medicamentos(
 	idMedicamento int primary key,
     nombreComercial varchar(100),
