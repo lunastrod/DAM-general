@@ -1,0 +1,7 @@
+Varias páginas de recetas:
+    Con recetas se pueden usar listas de ingredientes
+    Imágenes de comida
+    Enlaces a otras recetas y a otras páginas externas
+    Se pueden usar tablas para organizar informacion o comparar elementos
+    Seccion de comentarios en las recetas, con una página de crear cuenta (para usar formularios)
+    Un menú principal con todas las recetas y otras páginas útiles
