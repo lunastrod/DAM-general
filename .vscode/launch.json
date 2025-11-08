@@ -6,6 +6,20 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Ejemplo",
+            "request": "launch",
+            "mainClass": "Ejemplo",
+            "projectName": "DAM-general_dbfee772"
+        },
+        {
+            "type": "java",
+            "name": "Avanzado1",
+            "request": "launch",
+            "mainClass": "com.dam.ejercicio1.Avanzado1",
+            "projectName": "DAM-general_dbfee772"
+        },
+        {
+            "type": "java",
             "name": "Ejercicio1",
             "request": "launch",
             "mainClass": "Ejercicio1"
@@ -33,10 +47,8 @@
             "name": "Run camera_test.py (Custom CWD)",
             "type": "python",
             "request": "launch",
-            // 💡 Set the full path to the file you want to run
-            "program": "${workspaceFolder}/Varios/RaspiCam/camera_test.py", 
-            // 💡 Set the CWD to the directory containing the file
-            "cwd": "${workspaceFolder}/Varios/RaspiCam", 
+            "program": "${workspaceFolder}/Varios/RaspiCam/camera_test.py",
+            "cwd": "${workspaceFolder}/Varios/RaspiCam",
             "console": "integratedTerminal",
             "justMyCode": true
         }
