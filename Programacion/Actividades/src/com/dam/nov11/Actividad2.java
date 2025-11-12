@@ -13,6 +13,7 @@ public class Actividad2 {
         solicitar(nums);
         calculaSigno(nums);
     }
+    
     private static void solicitar(int[] nums){
         Scanner sc=new Scanner(System.in);
         for(int i=0; i<nums.length; i++){
