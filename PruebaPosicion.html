@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        .caja1{
+            width: 200px;
+            height: 50px;
+            border: 10px solid #aef3f8;
+            position: absolute;
+            overflow:scroll;
+            scrollbar-color: #f8a3d1 #a3f8e2;
+        }
+        .caja1{
+            top: 20px;
+            left: 40px;
+        }
+        .caja2{
+            width: 200px;
+            height: 50px;
+            border: 10px groove #b7f8ae;
+            position: absolute;
+        }
+        .caja2{
+            top: 100px;
+            left: 40px;
+        }
+        .caja3{
+            width: 400px;
+            height: 150px;
+            border: 10px solid #f8dfa3;
+            position: absolute;
+            background-color: rgb(230, 193, 193);
+        }
+        .caja3{
+            top: 250px;
+            left: 150px;
+            z-index: 1;
+        }
+        .caja4{
+            width: 400px;
+            height: 150px;
+            border: 10px solid #f8a3a3;
+            position: absolute;
+            text-align:center;
+            padding: 10px;
+        }
+        .caja4{
+            top: 290px;
+            left: 150px;
+        }
+    </style>
+        
+</head>
+<body>
+    <div class="caja1">
+        <script>
+            for(let i=1;i<=2000;i++){
+                document.write("Caja1-"+i+"<br>");
+            }
+        </script>
+    </div>
+    <div class="caja2">Hola2</div>
+    <div class="caja3">Hola3</div>
+    <div class="caja4">Hola4</div>
+    
+</body>
+</html>
