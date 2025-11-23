@@ -1,0 +1,190 @@
+-- Row expression comparison
+SELECT b.title
+FROM
+  books AS b
+  JOIN authors AS a ON a.author_id = b.author_id
+WHERE
+  (a.name, b.publication_year) = ('V. S. Naipaul', 1961);
+
+SELECT b.title
+FROM
+  books AS b
+  JOIN authors AS a ON a.author_id = b.author_id
+WHERE a.name = 'V. S. Naipaul'
+AND b.publication_year = 1961;
+
+-- Scalar subquery in WHERE clause
+SELECT * FROM books WHERE publication_year =
+  (SELECT publication_year
+   FROM books
+   WHERE title = 'The Three-Body Problem')
+;
+
+SELECT publication_year
+FROM books
+WHERE title = 'The Three-Body Problem';
+
+SELECT * FROM books WHERE publication_year = 2008;
+
+-- Row expression with subquery
+SELECT * FROM books
+WHERE (author_id, publication_year) =
+  (SELECT author_id, publication_year
+   FROM books
+   WHERE title = 'The Hundred Thousand Kingdoms')
+;
+
+-- Comparison operators with subqueries
+SELECT * FROM books
+WHERE publication_year >
+  (SELECT publication_year FROM books
+   WHERE title = 'Americanah')
+;
+
+-- IN operator with subquery
+SELECT * FROM books WHERE book_id IN
+  (SELECT book_id FROM books_awards)
+;
+
+-- NOT IN operator
+SELECT * FROM books WHERE book_id NOT IN
+  (SELECT book_id FROM books_awards)
+;
+
+-- IN with row expressions
+SELECT a.name AS author, b.title, b.publication_year
+FROM
+  authors AS a
+  JOIN books AS b ON a.author_id = b.author_id
+WHERE
+  (a.author_id, b.publication_year) IN
+    (SELECT author_id, substring(death, 1, 4) FROM authors)
+;
+
+-- IN with expression list (no subquery)
+SELECT a.name AS author, b.title
+FROM
+  books AS b
+  JOIN authors AS a ON a.author_id = b.author_id
+WHERE author IN
+  ('Virginia Woolf', 'Kazuo Ishiguro', 'Iris Murdoch');
+
+-- ANY operator (not supported in SQLite)
+SELECT * FROM books WHERE book_id = ANY
+  (SELECT book_id FROM books_awards);
+
+-- ALL operator (not supported in SQLite)
+SELECT * FROM books WHERE publication_year < ALL
+  (SELECT publication_year FROM books WHERE author_id =
+    (SELECT author_id FROM authors WHERE name = 'Willa Cather')
+  )
+;
+
+-- DELETE with subquery
+DELETE FROM authors
+WHERE author_id NOT IN
+  (SELECT author_id FROM books);
+
+-- Correlated subquery
+SELECT
+  a1.name AS author, a1.death, b.title, b.publication_year
+FROM
+  authors AS a1
+  JOIN books AS b ON a1.author_id = b.author_id
+WHERE b.publication_year >
+  (SELECT substring(death, 1, 4)
+   FROM authors AS a2
+   WHERE a2.author_id = a1.author_id)
+;
+
+-- EXISTS operator
+SELECT * FROM books AS b WHERE EXISTS
+  (SELECT 1
+   FROM books_awards AS ba
+   WHERE ba.book_id = b.book_id)
+;
+
+-- Subquery in SELECT clause with COUNT aggregate
+SELECT
+  a.name AS author,
+  (SELECT COUNT(*) FROM books AS b2 WHERE b2.author_id = a.author_id)
+    AS author_total,
+  b1.title
+FROM
+  authors AS a
+  JOIN books AS b1 ON b1.author_id = a.author_id
+;
+
+-- UPDATE with subquery in SET clause
+UPDATE books
+SET publication_year =
+  (SELECT MIN(publication_year)
+   FROM editions
+   WHERE books.book_id = editions.book_id)
+;
+
+-- UPDATE with WHERE subquery to avoid NULLs
+UPDATE books
+SET publication_year =
+  (SELECT MIN(publication_year)
+   FROM editions
+   WHERE books.book_id = editions.book_id)
+WHERE EXISTS
+  (SELECT 1 FROM editions WHERE books.book_id = editions.book_id)
+;
+
+-- Subquery in FROM clause
+SELECT
+  a.name AS author,
+  c.count AS author_total,
+  b.title
+FROM
+  authors AS a
+  JOIN books AS b ON b.author_id = a.author_id
+  JOIN
+    (SELECT author_id, COUNT(*) AS count
+     FROM books
+     GROUP BY author_id) AS c
+    ON c.author_id = a.author_id
+;
+
+-- Comparison of join vs subquery (both return same data but join has duplicates)
+SELECT * FROM books WHERE book_id IN
+  (SELECT book_id FROM books_awards)
+ORDER BY title;
+
+SELECT b.*
+FROM
+  books AS b
+  JOIN books_awards AS ba ON ba.book_id = b.book_id
+ORDER BY b.title;
+
+-- Three ways to find books published in author's death year
+SELECT a.name AS author, b.title, b.publication_year
+FROM
+  authors AS a
+  JOIN books AS b ON a.author_id = b.author_id
+WHERE
+  (a.author_id, b.publication_year) IN
+    (SELECT author_id, substring(death, 1, 4) FROM authors)
+;
+
+SELECT a1.name AS author, b.title, b.publication_year
+FROM
+  authors AS a1
+  JOIN books AS b ON a1.author_id = b.author_id
+WHERE EXISTS
+  (SELECT 1
+   FROM authors AS a2
+   WHERE a2.author_id = a1.author_id
+   AND substring(a2.death, 1, 4) = b.publication_year)
+;
+
+SELECT a1.name AS author, b.title, b.publication_year
+FROM
+  authors AS a1
+  JOIN books AS b ON a1.author_id = b.author_id
+  JOIN authors AS a2 ON
+    a2.author_id = a1.author_id
+    AND substring(a2.death, 1, 4) = b.publication_year
+;

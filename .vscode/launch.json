@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Encuestador",
+            "request": "launch",
+            "mainClass": "com.dam.nov18.Encuestador",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "Ejemplo",
             "request": "launch",
             "mainClass": "Ejemplo",

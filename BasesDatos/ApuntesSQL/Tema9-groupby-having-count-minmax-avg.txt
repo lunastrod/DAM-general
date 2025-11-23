@@ -1,0 +1,114 @@
+-- Basic COUNT aggregate
+SELECT COUNT(*) FROM bookstore_sales;
+
+-- COUNT with WHERE clause
+SELECT COUNT(*)
+FROM bookstore_sales
+WHERE payment = 'cash';
+
+-- COUNT applied to different columns (shows NULL handling)
+SELECT COUNT(*), COUNT(author_id), COUNT(birth), COUNT(death)
+FROM authors;
+
+-- Error example: mixing aggregates with non-grouped columns (works in SQLite, error elsewhere)
+SELECT title, COUNT(*) FROM bookstore_inventory;
+
+-- Multiple aggregate functions on same column
+SELECT COUNT(price), SUM(price), AVG(price), MIN(price), MAX(price)
+FROM bookstore_inventory;
+
+-- COUNT with DISTINCT to count unique values
+SELECT COUNT(title), COUNT(DISTINCT title) FROM bookstore_inventory;
+
+-- GROUP BY with aggregates
+SELECT condition, COUNT(*), AVG(price)
+FROM bookstore_inventory
+GROUP BY condition;
+
+-- GROUP BY with WHERE clause
+SELECT condition, COUNT(*), AVG(price)
+FROM bookstore_inventory
+WHERE stock_number NOT IN
+  (SELECT stock_number FROM bookstore_sales)
+GROUP BY condition;
+
+-- GROUP BY with join and date extraction
+SELECT
+  substring(s.date_sold, 6, 2) AS month,
+  SUM(i.price) AS total_sales
+FROM
+  bookstore_sales AS s
+  JOIN bookstore_inventory AS i ON s.stock_number = i.stock_number
+GROUP BY month;
+
+-- GROUP BY multiple columns
+SELECT
+  substring(s.date_sold, 6, 2) AS month,
+  s.payment,
+  SUM(i.price) AS total_sales
+FROM
+  bookstore_sales AS s
+  JOIN bookstore_inventory AS i ON s.stock_number = i.stock_number
+GROUP BY month, s.payment
+ORDER BY month, s.payment;
+
+-- HAVING clause to filter grouped results
+SELECT author, title, COUNT(*)
+FROM bookstore_inventory
+GROUP BY author, title
+HAVING COUNT(*) > 1
+ORDER BY COUNT(*) DESC;
+
+-- Both WHERE and HAVING in same query
+SELECT author, title, COUNT(*)
+FROM bookstore_inventory
+WHERE stock_number NOT IN
+  (SELECT stock_number FROM bookstore_sales)
+GROUP BY author, title
+HAVING COUNT(*) > 1;
+
+-- Self-check 1: Count books by specific author
+SELECT COUNT(*) FROM bookstore_inventory WHERE author = 'Toni Morrison';
+
+-- Self-check 2: Min, max, avg for specific condition
+SELECT MIN(price), MAX(price), AVG(price)
+FROM bookstore_inventory
+WHERE condition = 'good';
+
+-- Self-check 3: Count distinct authors
+SELECT COUNT(DISTINCT author) FROM bookstore_inventory;
+
+-- Self-check 4: Average price by author, sorted
+SELECT author, AVG(price)
+FROM bookstore_inventory
+GROUP BY author
+ORDER BY AVG(price) DESC;
+
+-- Self-check 5: Average price by author and condition
+SELECT author, condition, AVG(price)
+FROM bookstore_inventory
+GROUP BY author, condition
+ORDER BY author, condition;
+
+-- Self-check 6: Sales statistics by condition, excluding trade-ins
+SELECT i.condition, COUNT(*) AS books_sold, SUM(i.price) AS sales
+FROM
+  bookstore_inventory AS i
+  JOIN bookstore_sales AS s ON s.stock_number = i.stock_number
+WHERE s.payment <> 'trade in'
+GROUP BY i.condition;
+
+-- Self-check 7: Authors with average price less than 3
+SELECT author, AVG(price)
+FROM bookstore_inventory
+GROUP BY author
+HAVING AVG(price) < 3;
+
+-- Self-check 8: Price range by condition
+SELECT condition, MAX(price) - MIN(price)
+FROM bookstore_inventory
+GROUP BY condition;
+
+-- Self-check 9: Find books with maximum price using subquery
+SELECT * FROM bookstore_inventory WHERE price =
+  (SELECT MAX(price) FROM bookstore_inventory);

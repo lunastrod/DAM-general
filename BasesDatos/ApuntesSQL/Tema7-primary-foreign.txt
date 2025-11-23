@@ -1,0 +1,148 @@
+-- PRIMARY KEY constraint: These will fail due to duplicate key
+INSERT INTO authors (author_id, name)
+VALUES (1, 'Charles Dickens');
+
+UPDATE authors SET author_id = 1 WHERE author_id = 2;
+
+-- PRIMARY KEY: Single column inline syntax
+DROP TABLE IF EXISTS test;
+CREATE TABLE test (
+  x VARCHAR(10) PRIMARY KEY
+);
+
+-- PRIMARY KEY: Separate constraint syntax (single column)
+DROP TABLE IF EXISTS test2;
+DROP TABLE IF EXISTS test3;
+
+CREATE TABLE test2 (
+  x VARCHAR(10),
+  PRIMARY KEY (x)
+);
+
+-- PRIMARY KEY: Multi-column constraint
+CREATE TABLE test3 (
+  x INTEGER,
+  y INTEGER,
+  PRIMARY KEY (x, y)
+);
+
+-- FOREIGN KEY constraint: Enable enforcement in SQLite
+PRAGMA foreign_keys = ON;
+
+-- FOREIGN KEY: Insert with invalid reference (fails)
+INSERT INTO books (author_id, title)
+VALUES (99, 'Unknown');   -- 99 is not a valid author id
+
+-- FOREIGN KEY: Delete referenced row (fails)
+PRAGMA foreign_keys = ON;
+
+DELETE FROM authors WHERE author_id = 1;
+
+-- FOREIGN KEY: Delete referenced row after removing references (succeeds)
+PRAGMA foreign_keys = ON;
+
+DELETE FROM books WHERE author_id = 1;
+DELETE FROM authors_awards WHERE author_id = 1;
+DELETE FROM authors WHERE author_id = 1;
+
+-- FOREIGN KEY: Single column inline syntax
+DROP TABLE IF EXISTS referencing;
+DROP TABLE IF EXISTS referenced;
+
+CREATE TABLE referenced (
+  x INTEGER PRIMARY KEY
+);
+
+CREATE TABLE referencing (
+  xx INTEGER REFERENCES referenced (x)
+);
+
+-- FOREIGN KEY: Separate constraint syntax (multi-column)
+DROP TABLE IF EXISTS referencing2;
+DROP TABLE IF EXISTS referenced2;
+
+CREATE TABLE referenced2 (
+  a VARCHAR(10),
+  b VARCHAR(20),
+  PRIMARY KEY (a, b)
+);
+
+CREATE TABLE referencing2 (
+  c INTEGER PRIMARY KEY,
+  aa VARCHAR(10),
+  bb VARCHAR(10),
+  FOREIGN KEY (aa, bb) REFERENCES referenced2 (a, b)
+);
+
+-- FOREIGN KEY: Self-referencing table
+CREATE TABLE employees (
+  id INTEGER PRIMARY KEY,
+  name VARCHAR(100),
+  supervisor_id INTEGER REFERENCES employees (id)
+);
+
+-- FOREIGN KEY: CASCADE enforcement example
+PRAGMA foreign_keys = ON;
+
+DROP TABLE IF EXISTS works;
+DROP TABLE IF EXISTS composers;
+
+CREATE TABLE composers (
+  id INTEGER PRIMARY KEY,
+  name VARCHAR(30)
+);
+
+INSERT INTO composers VALUES
+  (1, 'Beethoven'),
+  (2, 'Mozart')
+;
+
+CREATE TABLE works (
+  title VARCHAR(50),
+  composer_id INTEGER REFERENCES composers (id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+INSERT INTO works VALUES
+  ('Symphony No. 1', 1),
+  ('Symphony No. 2', 1),
+  ('String Quartet No. 1', 2)
+;
+
+DELETE FROM composers WHERE name = 'Beethoven';
+
+UPDATE composers SET id = 4 WHERE name = 'Mozart';
+
+SELECT * FROM composers;
+SELECT * FROM works;
+
+-- UNIQUE constraint: Inline syntax (fails on duplicate)
+DROP TABLE IF EXISTS test4;
+CREATE TABLE test4 (
+  x INTEGER UNIQUE
+);
+
+INSERT INTO test4 VALUES (1);
+INSERT INTO test4 VALUES (2);
+INSERT INTO test4 VALUES (1);
+
+-- UNIQUE constraint: Separate constraint syntax (multi-column)
+DROP TABLE IF EXISTS test5;
+CREATE TABLE test5 (
+  x INTEGER,
+  y INTEGER,
+  UNIQUE (x, y)
+);
+
+-- CHECK constraint: Both single-column and table-level
+DROP TABLE IF EXISTS test6;
+CREATE TABLE test6 (
+  a INTEGER CHECK (a BETWEEN 0 AND 100),
+  b INTEGER,
+  CHECK (b > a)
+);
+
+INSERT INTO test6 VALUES (42, 200);
+INSERT INTO test6 VALUES (-1, 6);   -- error
+INSERT INTO test6 VALUES (10, 5);   -- error

@@ -1,0 +1,45 @@
+-- Basic SELECT: retrieve all columns and rows from a table
+SELECT * FROM fruit_stand;
+
+-- SELECT specific columns in a specific order
+SELECT price, item FROM fruit_stand;
+
+-- CREATE TABLE: define table structure with column names and data types
+CREATE TABLE fruit_stand (
+  item TEXT,
+  price NUMERIC,
+  unit TEXT
+);
+
+-- CREATE TABLE example with different columns
+CREATE TABLE my_purchase (
+  item TEXT,
+  quantity NUMERIC,
+  total_price NUMERIC
+);
+
+-- INSERT: add rows of data to a table
+INSERT INTO my_purchase VALUES ('apple', 2, 6.98);
+INSERT INTO my_purchase VALUES ('melon', 1, 0.89);
+
+-- Multi-line formatting example (same as basic SELECT)
+SELECT *
+FROM fruit_stand;
+
+-- Case-insensitive keywords examples (all equivalent)
+select * from fruit_stand;
+Select * From fruit_stand;
+select * FROM fruit_stand;
+
+-- Comments demonstration
+SELECT *
+/* here is a
+   multi-line comment */
+FROM      -- single-line comment
+  fruit_stand;
+
+-- Query SQLite system catalog to list all tables
+SELECT name FROM sqlite_master WHERE type = 'table';
+
+-- Get table names and their CREATE TABLE statements
+SELECT name, sql FROM sqlite_master WHERE type = 'table';
