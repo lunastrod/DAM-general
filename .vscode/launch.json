@@ -6,10 +6,10 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Encuestador",
+            "name": "GestorEstaciones",
             "request": "launch",
-            "mainClass": "com.dam.nov18.Encuestador",
-            "projectName": ""
+            "mainClass": "com.dam.nov20.GestorEstaciones",
+            "projectName": "DAM-general_dbfee772"
         },
         {
             "type": "java",
