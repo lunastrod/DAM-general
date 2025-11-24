@@ -1,0 +1,307 @@
+-- ============================================================================
+-- APPENDIX B: SQL REFERENCE - QUICK GUIDE
+-- ============================================================================
+-- Comprehensive reference for SQL data types, operators, and functions
+-- Based on SQL Standard 2016 with notes on database variations
+-- ============================================================================
+
+-- ============================================================================
+-- DATA TYPES
+-- ============================================================================
+
+-- ----------------------------------------------------------------------------
+-- NUMBER TYPES
+-- ----------------------------------------------------------------------------
+
+-- INTEGER TYPES
+-- Standard SQL: INTEGER (INT), SMALLINT, BIGINT
+-- SQLite: All integer types are equivalent to INTEGER
+-- Oracle: Use NUMBER instead of standard integer types
+-- All others: Support standard types
+
+-- EXACT DECIMAL NUMBERS
+NUMERIC(precision, scale)  -- e.g., NUMERIC(5,2) stores up to 999.99
+DECIMAL(precision, scale)  -- Synonym for NUMERIC
+NUMERIC(4)                 -- Scale defaults to 0 (integers only)
+NUMERIC                    -- Implementation-defined precision/scale
+
+-- FLOATING POINT NUMBERS
+-- FLOAT, REAL, DOUBLE PRECISION (DOUBLE)
+-- Implementations vary significantly
+
+-- ----------------------------------------------------------------------------
+-- CHARACTER STRING TYPES
+-- ----------------------------------------------------------------------------
+
+-- Fixed-length strings
+CHAR(n)              -- Exactly n characters (may be padded with spaces)
+CHARACTER(n)         -- Full form of CHAR(n)
+
+-- Variable-length strings
+VARCHAR(n)           -- Up to n characters
+CHARACTER VARYING(n) -- Full form of VARCHAR(n)
+
+-- Large text objects
+-- SQLite: Use TEXT for all string types
+-- PostgreSQL, MySQL: Use TEXT
+-- Oracle: Use CLOB
+-- SQL Server: Use VARCHAR(MAX)
+
+-- ----------------------------------------------------------------------------
+-- DATE AND TIME TYPES
+-- ----------------------------------------------------------------------------
+
+DATE                      -- Stores calendar date
+TIME                      -- Stores time of day
+TIME WITH TIME ZONE       -- Time with timezone info
+TIMESTAMP                 -- Date and time combined
+TIMESTAMP WITH TIME ZONE  -- Timestamp with timezone
+
+-- SQLite: Use TEXT, REAL, or INTEGER for date/time storage
+-- MySQL: TIMESTAMP includes date and time (use for DEFAULT current time)
+-- SQL Server: Use DATETIME2 instead of TIMESTAMP
+-- Oracle: No separate TIME type, use TIMESTAMP
+
+-- ============================================================================
+-- COMPARISON OPERATORS
+-- ============================================================================
+
+-- Basic comparisons (return NULL if either operand is NULL)
+=           -- Equal to
+<>          -- Not equal to (also != in most databases, nonstandard)
+<           -- Less than
+>           -- Greater than
+<=          -- Less than or equal
+>=          -- Greater than or equal
+
+-- Range comparison
+x BETWEEN y AND z         -- Equivalent to: x >= y AND x <= z
+x NOT BETWEEN y AND z     -- Equivalent to: NOT(x BETWEEN y AND z)
+
+-- NULL testing (always returns True or False, never NULL)
+x IS NULL                 -- True if x is NULL
+x IS NOT NULL             -- True if x is not NULL
+
+-- Distinct comparison (PostgreSQL only, treats NULL as a value)
+x IS DISTINCT FROM y      -- False if both are NULL or both equal
+x IS NOT DISTINCT FROM y  -- True if both are NULL or both equal
+
+-- ============================================================================
+-- MATHEMATICAL OPERATORS AND FUNCTIONS
+-- ============================================================================
+
+-- Basic arithmetic
+x + y        -- Addition
+x - y        -- Subtraction
+x * y        -- Multiplication
+x / y        -- Division
+
+-- Mathematical functions
+ABS(x)                    -- Absolute value
+MOD(x, divisor)           -- Modulus (remainder)
+POWER(base, exponent)     -- Raise to power
+SQRT(x)                   -- Square root
+FLOOR(x)                  -- Floor function
+CEILING(x) or CEIL(x)     -- Ceiling function
+
+-- Logarithmic functions
+LOG(base, x)              -- Logarithm (SQL Server: LOG(x, base))
+LN(x)                     -- Natural log (SQL Server: LOG(x))
+LOG10(x)                  -- Base-10 log (Oracle: LOG(10, x))
+EXP(x)                    -- Exponential function
+
+-- Trigonometric functions (angles in radians)
+SIN(x), COS(x), TAN(x)              -- Basic trig functions
+ASIN(x), ACOS(x), ATAN(x)           -- Inverse trig functions
+SINH(x), COSH(x), TANH(x)           -- Hyperbolic functions
+
+-- NULL handling: All math operations with NULL operands return NULL
+
+-- ============================================================================
+-- STRING OPERATORS AND FUNCTIONS
+-- ============================================================================
+
+-- Concatenation
+s || t                    -- Standard (MySQL: CONCAT(s,t); SQL Server: s + t)
+
+-- Pattern matching
+s LIKE pattern            -- Pattern matching with % and _
+s NOT LIKE pattern        -- Inverse of LIKE
+
+-- String functions
+CHARACTER_LENGTH(s)       -- Length (SQLite/Oracle: LENGTH; SQL Server: LEN)
+CHAR_LENGTH(s)           -- Short form
+
+POSITION(t IN s)          -- Find substring (SQLite/Oracle: INSTR(s, t))
+
+SUBSTRING(s FROM start [FOR length])  -- Extract substring
+-- SQLite/Oracle: SUBSTR(s, start, length)
+-- SQL Server: SUBSTRING(s, start, length)
+
+UPPER(s)                  -- Convert to uppercase
+LOWER(s)                  -- Convert to lowercase
+
+-- Trim whitespace or characters
+TRIM([[LEADING|TRAILING|BOTH] [t] FROM] s)
+-- If t omitted, trims whitespace; BOTH is default
+-- SQLite/Oracle/SQL Server: Use LTRIM, RTRIM, TRIM (varying usage)
+
+-- Replace substring
+OVERLAY(s PLACING t FROM start FOR length)
+-- Not in SQLite, Oracle, SQL Server
+
+-- NULL handling: String operations with NULL return NULL
+
+-- ============================================================================
+-- BOOLEAN OPERATORS
+-- ============================================================================
+
+-- Three-valued logic: True, False, NULL (unknown)
+
+-- Basic operators
+a AND b      -- True only if both are True
+a OR b       -- True if either is True
+NOT a        -- Inverts True/False; NOT NULL = NULL
+
+-- Truth tables with NULL:
+-- True AND NULL = NULL    True OR NULL = True
+-- False AND NULL = False  False OR NULL = NULL
+-- NULL AND NULL = NULL    NULL OR NULL = NULL
+
+-- Boolean tests (not in SQL Server/Oracle for TRUE/FALSE/UNKNOWN)
+a IS TRUE, a IS NOT TRUE
+a IS FALSE, a IS NOT FALSE
+a IS UNKNOWN, a IS NOT UNKNOWN  -- Same as IS NULL for Boolean expressions
+
+-- ============================================================================
+-- DATE AND TIME OPERATIONS
+-- ============================================================================
+
+-- Arithmetic operations
+date1 - date2             -- Returns INTERVAL
+datetime + interval       -- Returns modified datetime
+datetime - interval       -- Returns modified datetime
+interval + interval       -- Returns INTERVAL
+interval * number         -- Returns INTERVAL
+interval / number         -- Returns INTERVAL
+
+-- Current values
+CURRENT_DATE              -- Today's date
+CURRENT_TIME              -- Current time
+CURRENT_TIMESTAMP         -- Current date and time
+
+-- Extract date/time parts
+EXTRACT(field FROM datetime)
+-- field examples: 'YEAR', 'MONTH', 'DAY', 'HOUR', 'MINUTE', 'SECOND'
+-- Example: EXTRACT('HOUR' FROM TIME '10:03:21') returns 10
+
+-- Overlap testing
+(start1, end1) OVERLAPS (start2, end2)
+-- Each period can be (start, end) or (start, interval)
+
+-- Note: Implementation varies greatly across databases for date/time operations
+
+-- ============================================================================
+-- MISCELLANEOUS FUNCTIONS
+-- ============================================================================
+
+NULLIF(a, b)              -- Returns NULL if a = b, otherwise returns a
+COALESCE(a, b, c, ...)    -- Returns first non-NULL argument
+CAST(a AS type)           -- Explicit type conversion
+
+-- CASE expressions (see Chapter 1.3 for full details)
+CASE
+  WHEN condition1 THEN result1
+  WHEN condition2 THEN result2
+  ELSE default_result
+END
+
+-- ============================================================================
+-- AGGREGATE FUNCTIONS
+-- ============================================================================
+-- Used with GROUP BY to compute statistics on groups of rows
+
+COUNT(*)                  -- Count rows
+COUNT([DISTINCT] column)  -- Count non-NULL values
+AVG([DISTINCT] column)    -- Average (numeric only)
+SUM([DISTINCT] column)    -- Sum (numeric only)
+MAX([DISTINCT] column)    -- Maximum value
+MIN([DISTINCT] column)    -- Minimum value
+
+-- Statistical functions (not in SQLite)
+VAR_POP([DISTINCT] a)     -- Population variance (SQL Server: VARP)
+VAR_SAMP([DISTINCT] a)    -- Sample variance (SQL Server: VAR)
+STDDEV_POP([DISTINCT] a)  -- Population std dev (SQL Server: STDEVP)
+STDDEV_SAMP([DISTINCT] a) -- Sample std dev (SQL Server: STDEV)
+
+-- String aggregation
+LISTAGG(a [, delim])      -- Concatenate values into string
+-- SQLite/MySQL: GROUP_CONCAT(a, delim)
+-- PostgreSQL/SQL Server: STRING_AGG(a, delim)
+
+-- NULL handling: Aggregates ignore NULL values
+-- Exception: COUNT(*) counts all rows including those with NULLs
+
+-- ============================================================================
+-- EXAMPLE QUERIES DEMONSTRATING KEY CONCEPTS
+-- ============================================================================
+
+-- Comparison with NULL handling
+SELECT * FROM table WHERE column IS NULL;  -- Correct
+SELECT * FROM table WHERE column = NULL;   -- Wrong! Always returns no rows
+
+-- String operations
+SELECT SUBSTRING('hello, world' FROM 1 FOR 5);  -- Returns 'hello'
+SELECT UPPER('hello') || ' ' || LOWER('WORLD'); -- Returns 'HELLO world'
+
+-- Date arithmetic example (standard SQL)
+SELECT CURRENT_DATE + INTERVAL '7' DAY;  -- One week from today
+
+-- Aggregate with grouping
+SELECT category, COUNT(*), AVG(price)
+FROM products
+GROUP BY category
+HAVING COUNT(*) > 5;  -- Only categories with more than 5 products
+
+-- COALESCE for NULL handling
+SELECT COALESCE(middle_name, '(none)') FROM people;  -- Replace NULL
+
+-- CASE expression
+SELECT title,
+  CASE
+    WHEN price < 10 THEN 'cheap'
+    WHEN price < 50 THEN 'moderate'
+    ELSE 'expensive'
+  END AS price_category
+FROM books;
+
+-- ============================================================================
+-- DATABASE-SPECIFIC NOTES
+-- ============================================================================
+
+-- SQLite:
+-- - Dynamic typing (types are suggestions, not enforced)
+-- - Limited date/time support (use TEXT, REAL, or INTEGER)
+-- - Many standard functions not available or have different names
+
+-- PostgreSQL:
+-- - Most standards-compliant
+-- - Excellent date/time support
+-- - Supports advanced features like IS DISTINCT FROM
+
+-- MySQL:
+-- - TIMESTAMP required for DEFAULT current time (not DATE)
+-- - Some reserved keywords require backticks (e.g., `condition`)
+-- - Concatenation uses CONCAT() function, not ||
+
+-- Oracle:
+-- - Use NUMBER instead of INTEGER types
+-- - Use VARCHAR2 instead of VARCHAR
+-- - No separate TIME type
+-- - CLOB for large text
+
+-- SQL Server:
+-- - Use DATETIME2 instead of TIMESTAMP
+-- - Different function names for some aggregates
+-- - Concatenation uses + operator, not ||
+-- - No DOUBLE PRECISION (use FLOAT)

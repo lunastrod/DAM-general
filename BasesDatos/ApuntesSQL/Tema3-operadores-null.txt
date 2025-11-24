@@ -1,0 +1,183 @@
+-- Column expressions: Filter by author name
+SELECT *
+FROM simple_books
+WHERE author = 'J.R.R. Tolkien';
+
+-- String literal with embedded single quote (doubled)
+SELECT author FROM simple_books
+WHERE title = 'The Handmaid''s Tale';
+
+-- Selecting literals alongside columns
+SELECT 42, 'hello', author FROM simple_books;
+
+-- Inequality operator <>
+SELECT * FROM simple_books WHERE genre <> 'fantasy';
+
+-- Basic arithmetic as calculator
+SELECT 4 + 7;
+SELECT 302.78 * 14;
+
+-- Mathematical functions
+SELECT sqrt(3);
+SELECT log10(1e5);
+SELECT cos(0);
+
+-- Calculating century using math and AS keyword for renaming
+SELECT
+  title,
+  floor((publication_year + 99) / 100) AS century
+FROM simple_books;
+
+-- String concatenation operator ||
+SELECT title || ', by ' || author FROM simple_books;
+
+-- LIKE operator with % wildcard
+SELECT name FROM simple_authors WHERE name LIKE 'Isabel %';
+SELECT name FROM simple_authors WHERE name LIKE '% Ginsberg';
+SELECT title FROM simple_books WHERE title LIKE '%Earth%';
+
+-- LIKE with _ wildcard (matches single character)
+SELECT name FROM simple_authors WHERE name LIKE '_.%';
+
+-- upper() and lower() functions
+SELECT upper(title), author FROM simple_books;
+SELECT * FROM simple_books WHERE lower(title) LIKE '%love%';
+
+-- AND operator
+SELECT *
+FROM simple_books
+WHERE genre = 'fantasy' AND publication_year > 2000;
+
+-- OR operator
+SELECT * FROM simple_books
+WHERE genre = 'fantasy' OR genre = 'science fiction';
+
+-- NOT operator
+SELECT * FROM simple_books WHERE NOT genre = 'science fiction';
+SELECT * FROM simple_books WHERE genre <> 'science fiction';
+
+-- Order of operations with NOT and AND (incorrect example)
+SELECT * FROM simple_books
+WHERE NOT genre = 'fantasy' AND publication_year > 2000;
+
+-- Using parentheses to control order (correct version)
+SELECT * FROM simple_books
+WHERE NOT (genre = 'fantasy' AND publication_year > 2000);
+
+-- Verifying what gets excluded
+SELECT * FROM simple_books
+WHERE genre = 'fantasy' AND publication_year > 2000;
+
+-- AND applied before OR (first query) vs parentheses (second query)
+SELECT *
+FROM simple_books
+WHERE genre = 'science fiction' OR genre = 'fantasy'
+AND publication_year > 2000;
+
+SELECT *
+FROM simple_books
+WHERE
+    (genre = 'science fiction' OR genre = 'fantasy')
+    AND publication_year > 2000;
+
+-- CURRENT_DATE function
+SELECT CURRENT_DATE;
+
+-- IS NULL operator
+SELECT * FROM simple_authors WHERE death IS NULL;
+
+-- Comparison with NULL (returns no results)
+SELECT * FROM simple_authors WHERE death = NULL;
+
+-- Incorrect query for living authors (misses those with NULL death)
+SELECT * FROM simple_authors
+WHERE birth <= '2000-12-31'
+AND death >= '2000-01-01';
+
+-- Correct query handling NULL values
+SELECT * FROM simple_authors
+WHERE birth <= '2000-12-31' AND
+    (death >= '2000-01-01' OR death IS NULL);
+
+-- NULLS FIRST and NULLS LAST modifiers
+SELECT * FROM simple_authors ORDER BY death NULLS FIRST;
+SELECT * FROM simple_authors ORDER BY death NULLS LAST;
+
+-- CASE expression with categories
+SELECT
+    author, title,
+    CASE WHEN genre = 'fantasy' THEN 'speculative fiction'
+         WHEN genre = 'science fiction' THEN 'speculative fiction'
+         WHEN genre = 'poetry' THEN 'poetry'
+         WHEN genre = 'history' THEN 'non-fiction'
+         ELSE 'general fiction'
+    END
+    AS category
+FROM simple_books;
+
+-- CASE expression matching column value
+SELECT
+    author, title,
+    CASE genre
+        WHEN 'fantasy' THEN 'speculative fiction'
+        WHEN 'science fiction' THEN 'speculative fiction'
+        WHEN 'poetry' THEN 'poetry'
+        WHEN 'history' THEN 'non-fiction'
+        ELSE 'general fiction'
+    END
+    AS category
+FROM simple_books;
+
+-- COALESCE function to replace NULL with descriptive text
+SELECT name, COALESCE('died: ' || death, 'living')
+FROM simple_authors;
+
+-- NULLIF function
+SELECT title, author, NULLIF(genre, 'science fiction')
+FROM simple_books;
+
+-- Self-check answer: Books from 1980-2000 using comparison operators
+SELECT * FROM simple_books
+WHERE publication_year >= 1980 AND publication_year <= 2000
+ORDER BY publication_year;
+
+-- Self-check answer: Using BETWEEN operator
+SELECT * FROM simple_books
+WHERE publication_year BETWEEN 1980 AND 2000
+ORDER BY publication_year;
+
+-- Self-check answer: Authors starting with "J"
+SELECT name FROM simple_authors WHERE name LIKE 'J%';
+
+-- Self-check answer: Books 1950-1999 excluding poetry
+SELECT * FROM simple_books
+WHERE publication_year >= 1950 AND publication_year <= 1999
+AND genre <> 'poetry';
+
+-- Self-check answer: Books before 1950 or after 1999, excluding sci-fi
+SELECT * FROM simple_books
+WHERE (publication_year < 1950 OR publication_year > 1999)
+AND genre <> 'science fiction';
+
+-- Self-check answer: Complex WHERE with multiple conditions
+SELECT * FROM simple_books
+WHERE (title LIKE 'T%' OR title LIKE 'I%')
+AND (genre = 'fiction' OR genre = 'fantasy' OR genre = 'poetry');
+
+-- Self-check answer: Authors with no birth date
+SELECT name FROM simple_authors WHERE birth IS NULL;
+
+-- Self-check answer: Deceased authors born after 1915
+SELECT name FROM simple_authors
+WHERE death IS NOT NULL
+AND birth > '1915-12-31';
+
+-- Self-check answer: CASE to spell out centuries
+SELECT title, author,
+    CASE WHEN publication_year > 1900 AND publication_year <= 2000
+           THEN 'Twentieth Century'
+         WHEN publication_year > 2000 AND publication_year <= 2100
+           THEN 'Twenty-first Century'
+    END
+    AS century
+FROM simple_books;

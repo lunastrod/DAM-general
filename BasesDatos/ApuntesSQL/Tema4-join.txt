@@ -1,0 +1,317 @@
+-- Basic JOIN: Connect tables s and t where sy equals ty
+SELECT *
+FROM
+  s
+  JOIN t ON sy = ty
+;
+
+-- JOIN with OR condition
+SELECT *
+FROM
+  s
+  JOIN t ON sy = ty OR sy > ty
+;
+
+-- JOIN with WHERE clause to filter results
+SELECT *
+FROM
+  s
+  JOIN t ON sy = ty
+WHERE tz = 'blue';
+
+-- JOIN simple_books and simple_authors by author name
+SELECT title, author, birth
+FROM
+  simple_books
+  JOIN simple_authors ON author = name
+;
+
+-- Qualified column names for clarity
+SELECT
+  simple_books.title,
+  simple_books.author,
+  simple_authors.birth
+FROM
+  simple_books
+  JOIN simple_authors
+    ON simple_books.author = simple_authors.name
+;
+
+-- Using table.* to select all columns from specific table
+SELECT simple_books.*, simple_authors.birth
+FROM
+  simple_books
+  JOIN simple_authors ON simple_books.author = simple_authors.name
+;
+
+-- Table aliasing with AS keyword
+SELECT b.title, b.author, a.birth
+FROM
+  simple_books AS b
+  JOIN simple_authors AS a ON b.author = a.name
+;
+
+-- Self-join: Find books published same year as another book
+SELECT b2.*
+FROM
+  simple_books AS b1
+  JOIN simple_books AS b2
+    ON b1.publication_year = b2.publication_year
+WHERE
+  b1.title = 'The Three-Body Problem';
+
+-- Aliasing without AS keyword (alternative syntax)
+SELECT b.title, b.author, a.birth
+FROM
+  simple_books b
+  JOIN simple_authors a ON b.author = a.name
+;
+
+-- Using double quotes for mixed-case column alias
+SELECT 42 AS "The Answer";
+
+-- JOIN using identity columns (author_id)
+SELECT authors.name, books.title
+FROM
+  books
+  JOIN authors ON authors.author_id = books.author_id
+;
+
+-- Three-way JOIN: books, books_awards, awards (many-to-many)
+SELECT b.title, a.name AS award, ba.year
+FROM
+  books AS b
+  JOIN books_awards AS ba ON b.book_id = ba.book_id
+  JOIN awards AS a ON a.award_id = ba.award_id
+;
+
+-- LEFT OUTER JOIN: All books with awards where present
+SELECT b.title, a.name AS award, ba.year
+FROM
+  books AS b
+  LEFT JOIN books_awards AS ba ON b.book_id = ba.book_id
+  LEFT JOIN awards AS a ON a.award_id = ba.award_id
+;
+
+-- RIGHT OUTER JOIN equivalent (not supported in SQLite)
+SELECT b.title, a.name AS award, ba.year
+FROM
+  awards AS a
+  JOIN books_awards AS ba
+    ON a.id = ba.award_id
+  RIGHT JOIN books AS b
+    ON b.id = ba.book_id
+;
+
+-- LEFT JOIN with CASE to show status
+SELECT
+  inv.*,
+  CASE WHEN sales.stock_number IS NULL THEN 'in stock'
+       ELSE 'sold'
+  END
+    AS status
+FROM
+  bookstore_inventory AS inv
+  LEFT JOIN bookstore_sales AS sales
+    ON inv.stock_number = sales.stock_number
+;
+
+-- CROSS PRODUCT: All combinations of s and t rows
+SELECT * FROM s, t;
+
+-- Implicit join syntax (older style)
+SELECT * FROM s, t
+WHERE sy = ty;
+
+-- Missing join condition creates accidental cross product
+SELECT b.title, a.name AS award, ba.year
+FROM books AS b, awards AS a, books_awards AS ba
+WHERE b.book_id = ba.book_id
+-- missing: AND a.award_id = ba.award_id
+;
+
+-- Explicit CROSS JOIN syntax
+SELECT * FROM s CROSS JOIN t;
+
+-- Self-check answers: Two-way join explicit syntax
+SELECT e.publisher, e.publication_year, e.title
+FROM
+  books AS b
+  JOIN editions AS e ON b.book_id = e.book_id
+WHERE b.title = 'The Hobbit';
+
+-- Self-check answers: Two-way join implicit syntax
+SELECT e.publisher, e.publication_year, e.title
+FROM books AS b, editions AS e
+WHERE b.book_id = e.book_id
+AND   b.title = 'The Hobbit';
+
+-- Self-check: DISTINCT with JOIN
+SELECT DISTINCT e.title
+FROM
+  books AS b
+  JOIN editions AS e ON b.book_id = e.book_id
+WHERE b.title = 'The Fellowship of the Ring';
+
+SELECT DISTINCT e.title
+FROM books AS b, editions AS e
+WHERE b.book_id = e.book_id
+AND   b.title = 'The Fellowship of the Ring';
+
+-- Self-check: Compound join condition
+SELECT e.title, b.title, e.publisher, e.publisher_location
+FROM
+  books AS b
+  JOIN editions AS e
+    ON b.book_id = e.book_id AND b.title <> e.title
+WHERE e.publication_year > 2005;
+
+SELECT e.title, b.title, e.publisher, e.publisher_location
+FROM books AS b, editions AS e
+WHERE b.book_id = e.book_id
+AND   b.title <> e.title
+AND   e.publication_year > 2005;
+
+-- Self-check: Three-way join
+SELECT a.name, b.title, e.title, e.publisher
+FROM
+  authors AS a
+  JOIN books AS b ON a.author_id = b.author_id
+  JOIN editions AS e ON b.book_id = e.book_id
+WHERE e.publication_year > 2010;
+
+SELECT a.name, b.title, e.title, e.publisher
+FROM authors AS a, books AS b, editions AS e
+WHERE a.author_id = b.author_id
+AND   b.book_id = e.book_id
+AND   e.publication_year > 2010;
+
+-- Self-check: Cross-reference table with author awards
+SELECT au.name
+FROM
+  authors AS au
+  JOIN authors_awards AS aa ON aa.author_id = au.author_id
+  JOIN awards AS aw ON aa.award_id = aw.award_id
+WHERE aw.name = 'Neustadt International Prize for Literature'
+AND   aa.year = 1996;
+
+SELECT au.name
+FROM authors AS au, authors_awards AS aa, awards AS aw
+WHERE aa.author_id = au.author_id
+AND   aa.award_id = aw.award_id
+AND   aw.name = 'Neustadt International Prize for Literature'
+AND   aa.year = 1996;
+
+-- Self-check: List authors with awards
+SELECT au.name AS author, aw.name AS award, aa.year
+FROM
+  authors AS au
+  JOIN authors_awards AS aa ON aa.author_id = au.author_id
+  JOIN awards AS aw ON aa.award_id = aw.award_id
+ORDER BY au.name;
+
+SELECT au.name AS author, aw.name AS award, aa.year
+FROM authors AS au, authors_awards AS aa, awards AS aw
+WHERE aa.author_id = au.author_id
+AND   aa.award_id = aw.award_id
+ORDER BY au.name;
+
+-- Self-check: LEFT JOIN for all authors with optional awards
+SELECT au.name AS author, aw.name AS award, aa.year
+FROM
+  authors AS au
+  LEFT JOIN authors_awards AS aa ON aa.author_id = au.author_id
+  LEFT JOIN awards AS aw ON aa.award_id = aw.award_id
+ORDER BY au.name;
+
+-- Self-check: Find authors without awards using LEFT JOIN
+SELECT au.name
+FROM
+  authors AS au
+  LEFT JOIN authors_awards AS aa ON aa.author_id = au.author_id
+WHERE aa.author_id IS NULL;
+
+-- Self-check: Self-join to find books by same author
+SELECT b1.title
+FROM
+  books AS b1
+  JOIN books AS b2 ON b2.author_id = b1.author_id
+WHERE b2.title = 'Interpreter of Maladies';
+
+SELECT b1.title
+FROM books AS b1, books AS b2
+WHERE b1.author_id = b2.author_id
+AND   b2.title = 'Interpreter of Maladies';
+
+-- Self-check: Self-join with author name
+SELECT b1.title, a.name
+FROM
+  books AS b1
+  JOIN authors AS a ON b1.author_id = a.author_id
+  JOIN books AS b2 ON b2.author_id = a.author_id
+WHERE b2.title = 'Interpreter of Maladies';
+
+SELECT b1.title, a.name
+FROM books AS b1, books AS b2, authors AS a
+WHERE b1.author_id = a.author_id
+AND   b2.author_id = a.author_id
+AND   b2.title = 'Interpreter of Maladies';
+
+-- Self-check: Books published same year, excluding the reference book
+SELECT a.name, b2.title
+FROM
+  books AS b1
+  JOIN books AS b2
+    ON
+      b1.publication_year = b2.publication_year
+      AND b2.book_id <> b1.book_id
+  JOIN authors AS a ON a.author_id = b2.author_id
+WHERE b1.title = 'The Three-Body Problem';
+
+SELECT a.name, b2.title
+FROM books AS b1, books AS b2, authors AS a
+WHERE b1.publication_year = b2.publication_year
+AND   b2.book_id <> b1.book_id
+AND   a.author_id = b2.author_id
+AND   b1.title = 'The Three-Body Problem';
+
+-- Self-check: Books that won Nebula Award
+SELECT au.name AS author, b.title, ba.year
+FROM
+  authors AS au
+  JOIN books AS b ON au.author_id = b.author_id
+  JOIN books_awards AS ba ON b.book_id = ba.book_id
+  JOIN awards AS aw ON aw.award_id = ba.award_id
+WHERE aw.name = 'Nebula Award'
+ORDER BY ba.year DESC;
+
+SELECT au.name AS author, b.title, ba.year
+FROM authors AS au, books AS b, books_awards AS ba, awards AS aw
+WHERE au.author_id = b.author_id
+AND   b.book_id = ba.book_id
+AND   aw.award_id = ba.award_id
+AND   aw.name = 'Nebula Award'
+ORDER BY ba.year DESC;
+
+-- Self-check: Book awards won by Nobel Prize winners
+SELECT DISTINCT aw1.name
+FROM
+  books AS b
+  JOIN books_awards AS ba ON b.book_id = ba.book_id
+  JOIN awards AS aw1 ON aw1.award_id = ba.award_id  -- book awards
+  JOIN authors_awards AS aa ON b.author_id = aa.author_id
+  JOIN awards AS aw2 ON aw2.award_id = aa.award_id  -- author awards
+WHERE aw2.name = 'Nobel Prize in Literature';
+
+SELECT DISTINCT aw1.name
+FROM
+  books AS b,
+  books_awards AS ba,
+  awards AS aw1,         -- book awards
+  authors_awards AS aa,
+  awards AS aw2          -- author awards
+WHERE b.book_id = ba.book_id
+AND   aw1.award_id = ba.award_id
+AND   b.author_id = aa.author_id
+AND   aw2.award_id = aa.award_id
+AND   aw2.name = 'Nobel Prize in Literature';

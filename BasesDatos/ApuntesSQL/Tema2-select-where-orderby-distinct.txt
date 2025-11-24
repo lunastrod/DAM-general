@@ -1,0 +1,70 @@
+-- Retrieve all columns from simple_books table
+SELECT * FROM simple_books;
+
+-- Select specific columns
+SELECT author, title FROM simple_books;
+
+-- WHERE clause: Filter by author name
+SELECT * FROM simple_books WHERE author = 'Isabel Allende';
+
+-- WHERE clause: Filter by publication year
+SELECT author, title, genre
+FROM simple_books
+WHERE publication_year > 1999;
+
+-- WHERE clause: Get birth and death dates for specific author
+SELECT birth, death
+FROM simple_authors
+WHERE name = 'Ralph Ellison';
+
+-- Query that returns zero rows (no romance genre in data)
+SELECT * FROM simple_books WHERE genre = 'romance';
+
+-- ORDER BY: Sort by publication year (ascending by default)
+SELECT * FROM simple_books ORDER BY publication_year;
+
+-- ORDER BY: Sort by birth date
+SELECT * FROM simple_authors ORDER BY birth;
+
+-- ORDER BY multiple columns: genre first, then title
+SELECT author, title, genre
+FROM simple_books
+ORDER BY genre, title;
+
+-- ORDER BY DESC: Sort from most recent to least recent
+SELECT * FROM simple_books ORDER BY publication_year DESC;
+
+-- Returns duplicate genre values
+SELECT genre FROM simple_books;
+
+-- DISTINCT: Get unique genre values only
+SELECT DISTINCT genre FROM simple_books;
+
+-- Self-check answer: Select only name column
+SELECT name FROM simple_authors;
+
+-- Self-check answer: Find science fiction books
+SELECT * FROM simple_books WHERE genre = 'science fiction';
+
+-- Self-check answer: Find specific book details
+SELECT publication_year, author
+FROM simple_books
+WHERE title = 'Bodega Dreams';
+
+-- Self-check answer: Books published before 1950
+SELECT * FROM simple_books WHERE publication_year < 1950;
+
+-- Self-check answer: Books ordered by title
+SELECT * FROM simple_books ORDER BY title;
+
+-- Self-check answer: Authors publishing since 1980, ordered by name
+SELECT author
+FROM simple_books
+WHERE publication_year > 1979
+ORDER BY author;
+
+-- Self-check answer: Unique publication years since 1980, newest first
+SELECT DISTINCT publication_year
+FROM simple_books
+WHERE publication_year > 1979
+ORDER BY publication_year DESC;
