@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "dic9",
+            "request": "launch",
+            "mainClass": "dic9",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "GestorEstaciones",
             "request": "launch",
             "mainClass": "com.dam.nov20.GestorEstaciones",
