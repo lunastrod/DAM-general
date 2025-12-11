@@ -35,6 +35,10 @@ public class Perfil {
         this.numeroContactos = numeroContactos;
     }
 
+    public int getNumeroContactos() {
+        return numeroContactos;
+    }
+
     public String toString() {
         StringBuilder sb=new StringBuilder();
         sb.append("Nombre: ");
