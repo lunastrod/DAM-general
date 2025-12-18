@@ -58,18 +58,25 @@ cantidad de jugadores que tienen registrados
 Lista los nombres de los equipos cuya página web no incluya la
 palabra “www” y muestra cuántos jugadores tiene cada uno.
 */
-select * from equipo where webOficial not regexp "www";
+select *,(select COUNT(*) as "Jugadores equipo sin www" from jugador where idEquipo=(select idEquipo from equipo where webOficial not regexp "www") GROUP BY idEquipo) as "Cantidad Jugadores" from equipo where webOficial not regexp "www";
 select COUNT(*) as "Jugadores equipo sin www" from jugador where idEquipo=(select idEquipo from equipo where webOficial not regexp "www") GROUP BY idEquipo;
+select nombreEquipo,(select COUNT(*) as "Jugadores equipo sin www" from jugador where idEquipo=(select idEquipo from equipo where webOficial not regexp "www") GROUP BY idEquipo) as "cantidad" from equipo where webOficial not regexp "www";
+
 
 /*
 7. Equipos cuya web termine en ‘.com’ y salario total de sus jugadores
 Muestra el nombre de los equipos y la suma total del salario de
 todos sus jugadores si su web finaliza en “.com”.
 */
-select * from equipo where webOficial regexp ".com$";
+select nombreEquipo from equipo where webOficial regexp ".com$";
 
+SELECT E.nombreEquipo,SUM(salarioBruto) AS "Salario Total"
+FROM equipo AS E
+INNER JOIN jugador AS J ON E.idEquipo = J.idEquipo
+WHERE E.webOficial REGEXP '.com$'
+GROUP BY E.nombreEquipo
+ORDER BY "Salario Total" DESC;
 /*
-
 8. Promedio de goles por partido en un año específico
 Muestra todos los partidos jugados durante el año 2024 (o el año
 que tú uses en tu BD) y calcula el promedio total de goles por partido
@@ -81,7 +88,11 @@ que tú uses en tu BD) y calcula el promedio total de goles por partido
 Muestra los equipos que tengan más de 5 jugadores y calcula la edad
 promedio de sus jugadores.
 */
-
+SELECT E.nombreEquipo,Count(J.idJugador)
+FROM equipo AS E
+JOIN jugador AS J 
+	ON E.idEquipo = J.idEquipo
+where
 /*
 10.Equipos que hayan anotado más de 10 goles en total como locales
 (usando SUM + HAVING)

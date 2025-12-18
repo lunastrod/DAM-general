@@ -55,6 +55,26 @@ deshacer:
         #deshace el ultimo commit para editar su mensaje
             git commit --amend
 
+ramas:
+    CAMBIAR:
+        git checkout nombreDeRama
+    VER RAMAS:
+        git branch
+    CREAR RAMAS:
+        git branch nuevaRama
+        git checkout -b nuevaRama
+    CAMBIAR DE NOMBRE
+        git branch -m nombreActual nombreNuevo
+        git branch -M nombreNuevo (de rama actual)
+    BORRAR
+        git branch -d nombreDeRama
+    UNIR
+        git merge Rama (con la rama actual)
+        
+simulador:
+    https://git-school.github.io/visualizing-git/#free
+
+
 adog: (esto sirve para ver las ramas de un repo mejor que con log)
     git log --all --decorate --oneline --graph
     git config --global alias.adog "log --all --decorate --oneline --graph"

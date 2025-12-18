@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head><title>JS: Tipos y Estructuras</title></head>
+<body>
+
+    <div id="resultado"></div>
+
+    <script>
+        // 1. TIPOS DE DATOS EN VARIABLES
+        let texto = "Tienda Online";    // String
+        let precio = 15.99;             // Number
+        let disponible = true;          // Boolean (true/false)
+        let ofertas = ["Lunes", "Viernes"]; // Array (Lista)
+        let detalles = { id: 101, color: "Rojo" }; // Object (Propiedades)
+
+        // 2. BUCLE (for) - Recorrer el Array
+        console.log("Días de oferta:");
+        for (let i = 0; i < ofertas.length; i++) {
+            console.log("- " + ofertas[i]);
+        }
+
+        // 3. BUCLE (while)
+        let stock = 3;
+        while (stock > 0) {
+            console.log("While: Vendiendo unidad... quedan " + stock);
+            stock--;
+        }
+
+        // 4. CONDICIONAL (if/else) - Usando el Boolean
+        let mensajeStock;
+        if (disponible && stock >= 0) {
+            mensajeStock = "El producto está a la venta.";
+            console.log(mensajeStock);
+        } else {
+            mensajeStock = "No hay stock disponible.";
+            console.log(mensajeStock);
+        }
+
+        // 5. SWITCH CASE
+        let categoria = "Electrónica";
+        let mensajeCategoria;
+
+        switch (categoria) {
+            case "Fruta":
+                mensajeCategoria = "Es un producto perecedero.";
+                break;
+            case "Electrónica":
+                mensajeCategoria = "Requiere garantía de 2 años.";
+                break;
+            default:
+                mensajeCategoria = "Categoría general.";
+        }
+
+        let entradaUsuario=prompt("Introduzca valor","valor por defecto");
+        let confirme=confirm("confirme");
+
+        // Mostrar todo en el HTML
+        document.getElementById('resultado').innerHTML = `
+            <h1>${texto}</h1>
+            <p><strong>Precio:</strong> ${precio}€</p>
+            <p><strong>Estado:</strong> ${mensajeStock}</p>
+            <p><strong>Categoría:</strong> ${mensajeCategoria}</p>
+            <p><strong>ID Producto:</strong> ${detalles.id}</p>
+            <p><strong>Entrada usuario:</strong> ${entradaUsuario}</p>
+            <p><strong>Confirmacion:</strong> ${confirme}</p>
+        `;
+    </script>
+
+</body>
+</html>
