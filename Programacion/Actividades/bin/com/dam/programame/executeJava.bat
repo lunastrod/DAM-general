@@ -1,6 +1,6 @@
 @echo off
 
-set MAINCLASS=com.dam.programame.p371
+set MAINCLASS=com.dam.programame.p414
 
 "C:\Program Files\Java\jdk-21\bin\java.exe" ^
   -XX:+ShowCodeDetailsInExceptionMessages ^
