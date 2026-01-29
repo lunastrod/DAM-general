@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "LibreriaArray",
+            "request": "launch",
+            "mainClass": "com.dam.lib.LibreriaArray",
+            "projectName": "DAM-general_dbfee772"
+        },
+        {
+            "type": "java",
             "name": "ComparaPerfiles",
             "request": "launch",
             "mainClass": "com.dam.dic10.main.ComparaPerfiles",
