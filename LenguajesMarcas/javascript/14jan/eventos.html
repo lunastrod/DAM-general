@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <script>
+        function Ahora(){
+            alert("Hola Mundo")
+        }
+        function Cargar(){
+            alert("Pagina Cargada")
+            let passwd
+            do{
+                passwd=prompt("Introduce contraseña")
+            }while(passwd!="patatita")
+        }
+        function Acoso(){
+            alert('No te escapes!')
+        }
+        window.onload=Cargar()
+    </script>
+</head>
+<body onload="//Cargar()">
+    <button onclick="Ahora()">Pulsa</button>
+    <a href="#" onmouseover="Acoso()">Enlace</a>
+</body>
+</html>

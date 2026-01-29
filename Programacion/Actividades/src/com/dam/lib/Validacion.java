@@ -22,6 +22,8 @@ public class Validacion {
 
     public static Scanner newScanner(){
         return new Scanner(System.in);
+
+        
     }
 
     public static int validaInt(Scanner sc, String msg, int min, int max){
