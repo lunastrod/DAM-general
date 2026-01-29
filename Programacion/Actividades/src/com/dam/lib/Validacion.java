@@ -23,8 +23,6 @@ public class Validacion {
     public static Scanner newScanner(){
         return new Scanner(System.in);
 
-
-
         
     }
 
