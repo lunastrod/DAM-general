@@ -15,7 +15,7 @@ public class Empresa {
         return listaEmpleados;
     }
 
-    public addEmpleado(Empleado empleado) {
+    public void addEmpleado(Empleado empleado) {
         listaEmpleados.add(empleado);
     }
 

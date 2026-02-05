@@ -5,7 +5,7 @@ public class Empleado {
     protected String dni;
     protected double salario;
 
-    String [] tiposEmpleados = {"PRODUCCION", "DISTRIBUCION"};
+    public static final String [] tiposEmpleados = {"PRODUCCION", "DISTRIBUCION"};
 
     public Empleado(String nombre, String dni, double salario) {
         this.nombre = nombre;

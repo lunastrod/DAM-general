@@ -3,7 +3,7 @@ package com.dam.feb5;
 public class EmpleadoProduccion extends Empleado {
     private String turno;
     private double plusNoct;
-    String [] turnosValidos = {"MANANA", "TARDE", "NOCHE"};
+    public static final String [] TURNOS_VALIDOS = {"MANANA", "TARDE", "NOCHE"};
 
     public EmpleadoProduccion(String nombre, String dni, double salario, String turno, double plusNoct) {
         super(nombre, dni, salario);

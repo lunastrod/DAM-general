@@ -3,18 +3,48 @@ package com.dam.feb5;
 import java.util.Scanner;
 
 public class GestionEmpresa {
+    public static final String [] OPCIONES_MENU={"A","M","S"};
+    public static final String [] VALIDA_BOOLEAN={"Si", "No"};
     public static void main(String[] args) {
         Scanner sc= new Scanner(System.in);
         Empresa empresa = new Empresa(validaStrLen(sc, "nombre de la empresa", 1, 1000));
         
         String opcion;
+        String tipoEmpleado;
+        Empleado e=null;
         do{
             System.out.println("Introduce una de las siguientes opciones:");
             System.out.println("A) Añadir empleado");
             System.out.println("M) Mostrar empresa");
             System.out.println("S) Salir");
-            opcion=validaStrOpciones(sc, "Introduce una opcion", new String[] {"A","M","S"});
+            opcion=validaStrOpciones(sc, "opcion", OPCIONES_MENU);
             
+            switch (opcion) {
+                case "A":
+                    tipoEmpleado = validaStrOpciones(sc, "opcion", Empleado.tiposEmpleados);
+                    String nombre=validaStrLen(sc, "nombre", 1, Integer.MAX_VALUE);
+                    String dni=validaStrLen(sc, "dni", 1, 20);
+                    double salario=validaDouble(sc, "salario", 0, Double.MAX_VALUE);
+                    switch (tipoEmpleado) {
+                        case "PRODUCCION":
+                            String turno= validaStrOpciones(sc, "turno", EmpleadoProduccion.TURNOS_VALIDOS);
+                            double plusNoct=0;
+                            if(turno.equals("NOCHE")){
+                                plusNoct=validaDouble(sc, "plus nocturnidad", 0, Double.MAX_VALUE);
+                            }
+                            e=new EmpleadoProduccion(nombre, dni, salario, turno, plusNoct);
+                            break;
+                        case "DISTRIBUCION":
+                            String zona=validaStrLen(sc, "zona", 1, Integer.MAX_VALUE);
+                            e=new EmpleadoDistribucion(nombre, dni, salario, zona);
+                            break;
+                    }
+                    empresa.addEmpleado(e);
+                    break;
+                case "M":
+                    System.out.println(empresa);
+                    break;
+            }
         }while(!opcion.equals("S"));
     }
 
@@ -81,7 +111,7 @@ public class GestionEmpresa {
             System.out.println("Introduce "+msg+" (opciones: "+String.join(", ", opciones)+")");
             resultado=sc.nextLine();
             for(int i=0; i<opciones.length; i++){
-                if(resultado.equals(opciones[i])){
+                if(resultado.equalsIgnoreCase(opciones[i])){
                     valid=true;
                 }
             }
