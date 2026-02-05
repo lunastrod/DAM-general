@@ -1,8 +1,8 @@
 package com.dam.feb3;
 
 public class Banio extends Estancia {
-    protected boolean ducha;
-    protected boolean banera;
+    private boolean ducha;
+    private boolean banera;
     
     public Banio(String nombre, double metrosCuad, int numPuertas, int numVentanas, boolean ducha, boolean banera) {
         super(nombre, metrosCuad, numPuertas, numVentanas);
@@ -12,8 +12,9 @@ public class Banio extends Estancia {
 
     @Override
     public String toString() {
-        return "Banio [nombre=" + nombre + ", ducha=" + ducha + ", banera=" + banera + ", metrosCuad=" + metrosCuad
-                + ", numPuertas=" + numPuertas + ", numVentanas=" + numVentanas + "]";
-    }
+        String tieneDucha = ducha ? "Si" : "No";
+        String tieneBanera = banera ? "Si" : "No";
 
+        return super.toString() + " | Banio [Ducha: " + tieneDucha + ", Banera: " + tieneBanera + "]";
+    }
 }

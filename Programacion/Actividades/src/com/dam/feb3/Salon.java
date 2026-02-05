@@ -1,16 +1,21 @@
 package com.dam.feb3;
 
 public class Salon extends Estancia {
-    protected int numPuntosRed;
-    protected boolean tieneTerraza;
-    protected double m2Terr;
+    private int numPuntosRed;
+    private boolean tieneTerraza;
+    private double m2Terr;
 
     public Salon(String nombre, double metrosCuad, int numPuertas, int numVentanas, int numPuntosRed,
-            boolean tieneTerraza, double m2Terr) {
+                 boolean tieneTerraza, double m2Terr) {
         super(nombre, metrosCuad, numPuertas, numVentanas);
         this.numPuntosRed = numPuntosRed;
         this.tieneTerraza = tieneTerraza;
-        this.m2Terr = m2Terr;
+        
+        if (tieneTerraza) {
+            this.m2Terr = m2Terr;
+        } else {
+            this.m2Terr = 0; 
+        }
     }
 
     public boolean isTieneTerraza() {
@@ -23,8 +28,18 @@ public class Salon extends Estancia {
 
     @Override
     public String toString() {
-        return "Salon [nombre=" + nombre + ", numPuntosRed=" + numPuntosRed + ", metrosCuad=" + metrosCuad
-                + ", tieneTerraza=" + tieneTerraza + ", numPuertas=" + numPuertas + ", m2Terr=" + m2Terr
-                + ", numVentanas=" + numVentanas + "]";
+        String terrazaTexto = tieneTerraza ? "Si" : "No";
+        
+        // Use super.toString() to get Estancia's data and append Salon's specific info
+        String info = super.toString() + " | Salon [Internet: " + numPuntosRed + " pts, Terraza: " + terrazaTexto;
+        
+        // Only show m2Terr if the terrace actually exists
+        if (tieneTerraza) {
+            info += ", Tamano Terraza: " + m2Terr + "m2]";
+        } else {
+            info += "]";
+        }
+        
+        return info;
     }
 }
