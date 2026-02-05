@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    regex
+    <script>
+        //test busca la regex en un texto, devuelve true si lo encuentra
+        let cadena = "hola mundo!"
+        //que empieze por Hola
+        //las regex van entre /
+        let regex = /^Hola/
+        let resultado = regex.test(cadena)
+        document.write(" "+resultado)
+
+        //case insensitive
+        regex=/^Hola/i
+        resultado = regex.test(cadena)
+        document.write(" "+resultado)
+        //g busca todas las coincidencias
+        let texto = "sol, luna, sol, estrella";
+        let regexG = /sol/g;
+
+        while (coincidencia = regexG.exec(texto)) {
+            document.write("<br>Found " + coincidencia[0] + " at index " + coincidencia.index);
+        }
+
+        //match devuelve un array con todas las coincidencias
+        let texto2 = "El gato y el gato son amigos\nEl gato come pescado";
+        let regexMatch = /gato/g;
+        let resultadosMatch = texto2.match(regexMatch);
+        document.write("<br>Match results: " + resultadosMatch);
+
+    </script>
+    
+</body>
+</html>

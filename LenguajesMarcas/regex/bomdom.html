@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Este es el primer párrafo.</p>
+    <!-- BOM y DOM -->
+    <script>
+        function crearNuevaVentana() {
+            window.open("https://www.ejemplo.com", "_blank", "width=400,height=400");
+        }
+
+        window.resizeTo(800, 600); // Redimensionar la ventana actual
+
+        //BOM: Browser Object Model
+        //window, navigator, screen, location, history
+
+        document.write("Ancho de la ventana: " + window.innerWidth + "<br>");
+        document.write("Alto de la ventana: " + window.innerHeight + "<br>");
+        document.write("URL actual: " + window.location.href + "<br>");
+
+        //DOM: Document Object Model
+        //document, elementos HTML
+
+        document.write("Título del documento: " + document.title + "<br>");
+        document.write("Número de párrafos: " + document.getElementsByTagName("p").length + "<br>");
+
+        //Modificar el contenido de un elemento
+        let primerParrafo = document.getElementsByTagName("p")[0];
+        primerParrafo.innerHTML = "Este es el primer párrafo modificado.";
+        
+        //Abrir nueva ventana después de 2 segundos
+        setTimeout(crearNuevaVentana, 2000);
+        let idInterval= setInterval(() => {
+            document.body.style.backgroundColor = document.body.style.backgroundColor === 'lightblue' ? 'lightgreen' : 'lightblue';
+        }, 1000);
+    </script>
+</body>
+</html>
