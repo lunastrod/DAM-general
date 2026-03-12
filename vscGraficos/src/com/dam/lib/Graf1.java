@@ -9,6 +9,10 @@ import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
 
+/*
+todo: borders
+factories for every object
+*/
 
 public class Graf1 {
     private static Color defaultTextColor = new Color(220, 220, 220);
@@ -22,7 +26,6 @@ public class Graf1 {
         if(bgColor != null) defaultBgColor = bgColor;
         if(font != null) defaultFont = font;
         if(buttonBgColor != null) defaultButtonBgColor = buttonBgColor;
-
     }
 
     public static void show(JFrame marco) {
@@ -35,7 +38,7 @@ public class Graf1 {
         if(c instanceof JLabel) {
             ((JLabel) c).setText(texto);
             c.setBackground(bgColor != null ? bgColor : defaultBgColor);
-            ((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
+            //((JLabel) c).setHorizontalAlignment(JLabel.CENTER);
         } else if(c instanceof JButton) {
             c.setBackground(bgColor != null ? bgColor : defaultButtonBgColor);
             ((JButton) c).setText(texto);
