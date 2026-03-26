@@ -33,5 +33,4 @@ public class Encuesta {
                 "¿Qué síntomas padeció?: "+this.sintomas+"    "+
                 "Nivel de gravedad: "+this.gravedad;
     }
-    
 }
