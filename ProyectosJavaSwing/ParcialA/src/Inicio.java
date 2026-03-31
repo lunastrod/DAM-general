@@ -57,17 +57,19 @@ Código de los componentes de los paneles:
 
 import java.awt.EventQueue;
 
-import com.dam.view.VAddEncuesta;
+import com.dam.control.EncuestadorControlador;
+import com.dam.model.ListaEncuestas;
+import com.dam.view.VPrincipal;
 
 public class Inicio {
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable(){
             public void run(){
-                VAddEncuesta ventana=new VAddEncuesta();
-                //ListaEncuestas modelo=new ListaEncuestas();
-                //EncuestadorControlador controlador=new EncuestadorControlador(ventana,modelo);
-                //ventana.setControlador(controlador);
-                ventana.hacerVisible();
+                VPrincipal ventanaPrincipal=new VPrincipal();
+                ListaEncuestas modelo=new ListaEncuestas();
+                EncuestadorControlador controlador=new EncuestadorControlador(ventanaPrincipal,modelo);
+                ventanaPrincipal.setControlador(controlador);
+                ventanaPrincipal.hacerVisible();
             }
         });
     }

@@ -1,6 +1,6 @@
 package com.dam.view;
 
-import com.dam.control.Controlador;
+import com.dam.control.EncuestadorControlador;
 
 public interface IVentana {
 	
@@ -8,7 +8,7 @@ public interface IVentana {
 	
 	public void crearComponentes();
 	
-	public void setControlador(Controlador ch);
+	public void setControlador(EncuestadorControlador ch);
 	
 	public void hacerVisible();
 

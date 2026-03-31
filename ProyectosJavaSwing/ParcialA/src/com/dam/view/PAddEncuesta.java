@@ -1,55 +1,78 @@
 package com.dam.view;
 
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 
-import com.dam.control.Controlador;
+import com.dam.control.EncuestadorControlador;
+import com.dam.model.Encuesta;
 
-public class VAddEncuesta extends JFrame implements IVentana {
-    private static final String[] FRECUENCIAS = {"Ninguna", "1 o 2 veces por semana", "3 o 4 veces por semana", "5 o 6 veces por semana", "Todos los dias"};
-    private static final String BTN_ADD_PRODUCTO = "Guardar Encuesta";
-
-    private static final String TITULO="ENCUESTAS";
+public class PAddEncuesta extends JPanel {
+    
+    public static final String BTN_ADD_PRODUCTO = "Guardar Encuesta";
     private static final int ANCHO=600;
     private static final int ALTO=400;
-    JRadioButton rdbtn517, rdbtn1830, rdbtn3140, rdbtn4165, rdbtn65;
-    ButtonGroup btngEdad = new ButtonGroup();
-    JComboBox<String> cbxSeries;
-    JList<String> lstSeries;
-    JScrollPane scrollPane;
-    JCheckBox chckJdT, chckV, chckBB, chckST, chckECdlC, chckDB, chck7V;
-    JButton btnGuardarEncuesta, btnAddProducto, btnVer;
-    Controlador controlador;
-    JComboBox<String> cmbFrecuencia;
+    private JRadioButton rdbtn517, rdbtn1830, rdbtn3140, rdbtn4165, rdbtn65;
+    private ButtonGroup btngEdad = new ButtonGroup();
+    private JCheckBox chckJdT, chckV, chckBB, chckST, chckECdlC, chckEJdC, chckDB, chck7V;
+    private JButton btnAddProducto;
+    private JComboBox<String> cmbFrecuencia;
+    private JLabel mensaje;
 
-
-
-    public VAddEncuesta(){
-        configurarVentana();
+    public PAddEncuesta(){
+        setLayout(null);
+        setSize(ANCHO,ALTO);
         crearComponentes();
     }
 
-    public void configurarVentana(){
-		setTitle(TITULO);
-        setSize(ANCHO, ALTO);
-        setLocationRelativeTo(null);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-        getContentPane().setLayout(null);
+    public void mostrarMensaje(String mensaje) {
+        this.mensaje.setText(mensaje);
+    }
+
+    public Encuesta getEncuesta() {
+        String edad = "";
+        if(rdbtn517.isSelected()) edad = Encuesta.EDAD[0];
+        else if(rdbtn1830.isSelected()) edad = Encuesta.EDAD[1];
+        else if(rdbtn3140.isSelected()) edad = Encuesta.EDAD[2];
+        else if(rdbtn4165.isSelected()) edad = Encuesta.EDAD[3];
+        else if(rdbtn65.isSelected()) edad = Encuesta.EDAD[4];
+        String frecuencia = cmbFrecuencia.getSelectedItem().toString();
+
+        ArrayList<String> series = new ArrayList<>();
+        if(chckJdT.isSelected()) series.add(Encuesta.SERIES[0]);
+        if(chckV.isSelected()) series.add(Encuesta.SERIES[1]);
+        if(chckBB.isSelected()) series.add(Encuesta.SERIES[2]);
+        if(chckST.isSelected()) series.add(Encuesta.SERIES[3]);
+        if(chckECdlC.isSelected()) series.add(Encuesta.SERIES[4]);
+        if(chckEJdC.isSelected()) series.add(Encuesta.SERIES[5]);
+        if(chckDB.isSelected()) series.add(Encuesta.SERIES[6]);
+        if(chck7V.isSelected()) series.add(Encuesta.SERIES[7]);
+
+        return new Encuesta(edad, frecuencia, series);
+    }
+
+    public void limpiarFormulario() {
+        btngEdad.setSelected(rdbtn517.getModel(),true);
+        cmbFrecuencia.setSelectedIndex(0);
+        chckJdT.setSelected(false);
+        chckV.setSelected(false);
+        chckBB.setSelected(false);
+        chckST.setSelected(false);
+        chckECdlC.setSelected(false);
+        chckEJdC.setSelected(false);
+        chckDB.setSelected(false);
+        chck7V.setSelected(false);
     }
 	
 	public void crearComponentes(){
-        
         JLabel lblTitulo = new JLabel("Realizar encuesta");
         lblTitulo.setFont(new Font("Tahoma", Font.BOLD, 14));
         lblTitulo.setBounds(25, 20, 150, 25);
@@ -82,7 +105,7 @@ public class VAddEncuesta extends JFrame implements IVentana {
         add(lblFrecuencia);
         cmbFrecuencia = new JComboBox<String>();
         DefaultComboBoxModel<String> cmbModel = new
-        DefaultComboBoxModel<String>(FRECUENCIAS);
+        DefaultComboBoxModel<String>(Encuesta.FRECUENCIAS);
         cmbFrecuencia.setModel(cmbModel);
         cmbFrecuencia.setBounds(150, 113, 175, 20);
         add(cmbFrecuencia);
@@ -104,9 +127,9 @@ public class VAddEncuesta extends JFrame implements IVentana {
         chckECdlC = new JCheckBox("El Cuento de la Criada");
         chckECdlC.setBounds(125, 202, 175, 22);
         add(chckECdlC);
-        chckECdlC = new JCheckBox("El Juego del Calamar");
-        chckECdlC.setBounds(305, 202, 150, 22);
-        add(chckECdlC);
+        chckEJdC = new JCheckBox("El Juego del Calamar");
+        chckEJdC.setBounds(305, 202, 150, 22);
+        add(chckEJdC);
         chckDB = new JCheckBox("Dragon Ball");
         chckDB.setBounds(125, 229, 150, 22);
         add(chckDB);
@@ -115,7 +138,12 @@ public class VAddEncuesta extends JFrame implements IVentana {
         add(chck7V);
         btnAddProducto = new JButton(BTN_ADD_PRODUCTO);
         btnAddProducto.setBounds(225, 275, 150, 22);
+        btnAddProducto.setActionCommand(BTN_ADD_PRODUCTO);
         add(btnAddProducto);
+        btngEdad.setSelected(rdbtn517.getModel(),true);
+        mensaje = new JLabel();
+        mensaje.setBounds(225, 300, 150, 22);
+        add(mensaje);
         /*
         PVerEncuestas:
         JLabel lblLista = new JLabel("Listado de Encuestas");
@@ -136,8 +164,8 @@ public class VAddEncuesta extends JFrame implements IVentana {
         */
     }
 	
-	public void setControlador(Controlador ch){
-        //TODO: configurar controlador (addActionListener)
+	public void setControlador(EncuestadorControlador ch){
+        btnAddProducto.addActionListener(ch);
     }
 	
 	public void hacerVisible(){
