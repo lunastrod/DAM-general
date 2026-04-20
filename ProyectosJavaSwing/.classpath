@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="src" path="Examen14Abr/src"/>
+	<classpathentry kind="src" path="ParcialA/src"/>
+	<classpathentry kind="src" path="plantilla/src"/>
+	<classpathentry kind="src" path="PruebaSQLite/src"/>
+	<classpathentry kind="src" path="Template/src"/>
+	<classpathentry kind="src" path="UF9_4Encuesta/src"/>
+	<classpathentry kind="src" path="UF9.5ListaCompra/src"/>
+	<classpathentry kind="lib" path="PruebaSQLite/lib/sqlite-jdbc-3.51.3.0.jar"/>
+	<classpathentry kind="output" path="Examen14Abr/bin"/>
+</classpath>
