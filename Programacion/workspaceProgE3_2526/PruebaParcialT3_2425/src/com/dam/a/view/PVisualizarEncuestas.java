@@ -81,7 +81,6 @@ public class PVisualizarEncuestas extends JPanel implements IPaneles {
 		for (Encuesta e : listaEncuestas) {
 			lstModel.addElement(e);
 		}
-		
 	}
 
 }
