@@ -23,6 +23,7 @@ public class ConsultaRestaurantes extends JPanel implements IPanel{
     public static final String COMANDO_BTN_ELIMINAR="Eliminar";
 
     private JTable tableRestaurantes;
+    private DefaultTableModel tableModel;
     private JButton btnConsultar;
     private JButton btnEliminar;
     private JComboBox<String> comboBoxRegion;
@@ -40,16 +41,16 @@ public class ConsultaRestaurantes extends JPanel implements IPanel{
     }
 
     public void actualizaTablaRestaurantes(ArrayList<Restaurante> r) {
-        DefaultTableModel model = new DefaultTableModel(Restaurante.COLUMNAS, 0){
+        tableModel = new DefaultTableModel(Restaurante.COLUMNAS, 0){
             @Override
             public boolean isCellEditable(int row, int column) {
                 return false;
             }
         };
         for (Restaurante restaurante : r) {
-            model.addRow(restaurante.getFila());-
+            tableModel.addRow(restaurante.getFila());
         }
-        tableRestaurantes.setModel(model);
+        tableRestaurantes.setModel(tableModel);
     }
 
     public void actualizaComboRegion(ArrayList<String> regiones) {
@@ -76,8 +77,13 @@ public class ConsultaRestaurantes extends JPanel implements IPanel{
         return (String) comboBoxDistincion.getSelectedItem();
     }
 
-    public int getRestauranteSeleccionado() {
-        return tableRestaurantes.getSelectedRow();
+    public String getRestauranteSeleccionado() {//retorna nombre
+        int fila = tableRestaurantes.getSelectedRow();
+        String nombre=null;
+        if(fila>=0){
+            nombre = tableModel.getValueAt(fila, 0).toString();
+        }
+        return nombre;
     }
 
     @Override

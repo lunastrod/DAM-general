@@ -110,4 +110,8 @@ public class VentanaPrincipal extends JFrame implements IVentana{
     public void mensajeAlerta(String mensaje,String titulo){
         JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.WARNING_MESSAGE);
     }
+
+    public boolean mensajeConfirmacion(String mensaje,String titulo){
+        return JOptionPane.showConfirmDialog(this, mensaje, titulo, JOptionPane.YES_NO_OPTION)==0;
+    }
 }

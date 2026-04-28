@@ -8,26 +8,47 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 public class RestauranteDAO {
-    static final String NOM_TABLA_RESTAURANTES = "RESTAURANTES";
-	static final String COL_ID = "ID";
-	static final String COL_NOMBRE = "NOMBRE";
-    static final String COL_REGION = "REGION";
-    static final String COL_CIUDAD = "CIUDAD";
-    static final String COL_DISTINCION = "DISTINCION";
-    static final String COL_DIRECCION = "DIRECCION";
-    static final String COL_PRECIO_MINIMO = "PRECIO_MIN";
-    static final String COL_PRECIO_MAXIMO = "PRECIO_MAX";
-    static final String COL_COCINA = "COCINA";
-    static final String COL_TELEFONO = "TELEFONO";
-    static final String COL_WEB = "WEB";
+    public static final String NOM_TABLA_RESTAURANTES = "RESTAURANTES";
+	public static final String COL_ID = "ID";
+	public static final String COL_NOMBRE = "NOMBRE";
+    public static final String COL_REGION = "REGION";
+    public static final String COL_CIUDAD = "CIUDAD";
+    public static final String COL_DISTINCION = "DISTINCION";
+    public static final String COL_DIRECCION = "DIRECCION";
+    public static final String COL_PRECIO_MINIMO = "PRECIO_MIN";
+    public static final String COL_PRECIO_MAXIMO = "PRECIO_MAX";
+    public static final String COL_COCINA = "COCINA";
+    public static final String COL_TELEFONO = "TELEFONO";
+    public static final String COL_WEB = "WEB";
 
-    static final String[] FILTRO_ESTRELLAS={"1 estrella", "2 estrellas", "3 estrellas"};
-    static final String FILTRO_TODAS="TODAS";
+    public static final String[] FILTRO_ESTRELLAS={"1 estrella", "2 estrellas", "3 estrellas"};
+    public static final String FILTRO_TODAS="TODAS";
 	
 	private AccesoDBProp acc;
 
     public RestauranteDAO(AccesoDBProp acc) {
         this.acc = acc;
+    }
+
+    public void eliminarRestaurante(String nombre){
+        String sentencia="DELETE FROM " + NOM_TABLA_RESTAURANTES + " WHERE " + COL_NOMBRE + " = ?";
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = acc.getConexion();
+            stmt = con.prepareStatement(sentencia);
+            stmt.setString(1, nombre);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar los recursos: " + e.getMessage());
+            }
+        }
     }
 
     public ArrayList<String> consultarRegiones() {

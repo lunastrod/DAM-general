@@ -29,6 +29,18 @@ public class Controlador implements ActionListener {
         this.dao = dao;
     }
 
+    private void actualizaTablaRestaurantes(String d,String p){
+        ArrayList<Restaurante> r = dao.consultarRestaurantesFiltro(d, p);
+        if(r.isEmpty()){
+            p1.mostrarComponentesResultado(false);
+            v.mensajeInfo("No se han encontrado datos para el filtro introducido","Resultado de Consulta");
+        }
+        else{
+            p1.mostrarComponentesResultado(true);
+            p1.actualizaTablaRestaurantes(r);
+        }
+    }
+
     public void actionPerformed(ActionEvent e) {
         String comando= e.getActionCommand();
         
@@ -42,6 +54,7 @@ public class Controlador implements ActionListener {
                     break;
                 case VentanaPrincipal.COMANDO_MENU_REGISTRO:
                     v.cargarPanel(p2);
+                    p2.actualizaComboRegion(dao.consultarRegiones());
                     break;
                 case VentanaPrincipal.COMANDO_MENU_MODIFICACION:
                     v.cargarPanel(p3);
@@ -56,7 +69,7 @@ public class Controlador implements ActionListener {
         else if(e.getSource() instanceof JButton){
             switch (comando) {
                 case ConsultaRestaurantes.COMANDO_BTN_CONSULTAR:
-                    String d="TODAS";
+                    String d=RestauranteDAO.FILTRO_TODAS;
                     if(p1.getDistincion().equals("1 estrella")){
                         d="1";
                     }
@@ -66,39 +79,36 @@ public class Controlador implements ActionListener {
                     else if(p1.getDistincion().equals("3 estrellas")){
                         d="3";
                     }
-                    ArrayList<Restaurante> r = dao.consultarRestaurantesFiltro(d, p1.getRegion());
-                    if(r.isEmpty()){
-                        p1.mostrarComponentesResultado(false);
-                        v.mensajeInfo("No se han encontrado datos para el filtro introducido","Resultado de Consulta");
-                    }
-                    else{
-                        p1.mostrarComponentesResultado(true);
-                        p1.actualizaTablaRestaurantes(r);
-                    }
+                    actualizaTablaRestaurantes(d,p1.getRegion());
                     break;
                 case ConsultaRestaurantes.COMANDO_BTN_ELIMINAR:
-                    p1.getRestauranteSeleccionado();
-                    if(p1.getRestauranteSeleccionado()>=0){
-                        v.mensajeInfo("Restaurante eliminado correctamente","Eliminación");
+                    String nombreRestaurante=p1.getRestauranteSeleccionado();
+                    if(nombreRestaurante!=null){
+                        if(v.mensajeConfirmacion("Se va a eliminar el registro seleccionado, ¿desea continuar?", "Confirmación")){
+                            dao.eliminarRestaurante(nombreRestaurante);
+                            v.mensajeInfo("Se ha eliminado el restaurante con éxito","Resultado de operación");
+                            actualizaTablaRestaurantes(RestauranteDAO.FILTRO_TODAS, RestauranteDAO.FILTRO_TODAS);
+                        }
                     }
                     else{
-                        v.mensajeAlerta("Debe seleccionar un restaurante para eliminarlo","Alerta de Eliminación");
+                        v.mensajeError("Debe seleccionar el registro a eliminar","Error de Selección");
                     }
+
                     break;
                 case ModificaRestaurante.COMANDO_BTN_BUSCAR:
-                    System.out.println("Buscar");
+                    
                     break;
                 case ModificaRestaurante.COMANDO_BTN_MODIFICAR:
-                    System.out.println("Modificar");
+                    
                     break;
                 case ModificaRestaurante.COMANDO_BTN_CANCELAR:
-                    System.out.println("Cancelar");
+                    
                     break;
                 case RegistraRestaurante.COMANDO_BTN_GUARDAR:
-                    System.out.println("Guardar");
+                    
                     break;
                 case RegistraRestaurante.COMANDO_BTN_LIMPIAR:
-                    System.out.println("Limpiar");
+                    
                     break;
                 default:
                     System.out.println("Comando no reconocido");

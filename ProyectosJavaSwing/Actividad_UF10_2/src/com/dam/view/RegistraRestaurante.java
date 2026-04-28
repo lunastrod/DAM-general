@@ -2,6 +2,7 @@ package com.dam.view;
 
 
 import java.awt.Font;
+import java.util.ArrayList;
 
 import javax.swing.*;
 
@@ -30,9 +31,14 @@ public class RegistraRestaurante extends JPanel implements IPanel{
     private JTextField tfWeb;
     private JTextField tfPrecioMinimo;
     private JTextField tfPrecioMaximo;
-    JButton btnLimpiar;
-    JButton btnGuardar;
-    JSpinner spinnerDistincion;
+    private JButton btnLimpiar;
+    private JButton btnGuardar;
+    private JSpinner spinnerDistincion;
+
+    JComboBox<String> comboRegion;
+    JComboBox<String> comboCocina;
+    DefaultComboBoxModel<String> modelComboRegion;
+    DefaultComboBoxModel<String> modelComboCocina;
     
 
     public RegistraRestaurante(){
@@ -104,8 +110,10 @@ public class RegistraRestaurante extends JPanel implements IPanel{
         add(tfTelefono);
         tfTelefono.setColumns(10);
         
-        JComboBox<String> comboCocina = new JComboBox<String>();
+        comboCocina = new JComboBox<String>();
         comboCocina.setBounds(307, 87, 119, 22);
+        modelComboCocina = new DefaultComboBoxModel<String>();
+        comboCocina.setModel(modelComboCocina);
         add(comboCocina);
         
         tfCiudad = new JTextField();
@@ -136,8 +144,10 @@ public class RegistraRestaurante extends JPanel implements IPanel{
         add(tfPrecioMaximo);
         tfPrecioMaximo.setColumns(10);
         
-        JComboBox<String> comboRegion = new JComboBox<String>();
+        comboRegion = new JComboBox<String>();
         comboRegion.setBounds(101, 132, 119, 22);
+        modelComboRegion = new DefaultComboBoxModel<String>();
+        comboRegion.setModel(modelComboRegion);
         add(comboRegion);
         
         spinnerDistincion = new JSpinner();
@@ -147,6 +157,14 @@ public class RegistraRestaurante extends JPanel implements IPanel{
 
     public void limpiarValores(){
 
+    }
+
+    public void actualizaComboRegion(ArrayList<String> regiones){
+        comboRegion.removeAllItems();
+        comboRegion.addItem("TODAS");
+        for (String region : regiones) {
+            comboRegion.addItem(region);
+        }
     }
 
 
