@@ -60,7 +60,4 @@ function insertarProducto($conexion, $nombre, $precio) {
     // 4. Cerrar la sentencia
     $stmt->close();
 }
-
-
-
 ?>
