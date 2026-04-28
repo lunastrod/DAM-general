@@ -12,8 +12,9 @@ public class Inicio {
                 ConsultaRestaurantes panel=new ConsultaRestaurantes();
                 RegistraRestaurante panel2=new RegistraRestaurante();
                 ModificaRestaurante panel3=new ModificaRestaurante();
-                ListaEntidad modelo=new ListaEntidad();
-                Controlador controlador=new Controlador(ventana,panel,panel2,panel3,modelo);
+                AccesoDBProp acc=new AccesoDBProp();
+                RestauranteDAO dao=new RestauranteDAO(acc);
+                Controlador controlador=new Controlador(ventana,panel,panel2,panel3,dao);
                 ventana.setControlador(controlador);
                 panel.setControlador(controlador);
                 panel2.setControlador(controlador);

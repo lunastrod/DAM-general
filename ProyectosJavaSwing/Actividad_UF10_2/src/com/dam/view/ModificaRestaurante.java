@@ -1,24 +1,41 @@
 package com.dam.view;
 
 
+import java.awt.Font;
+
 import javax.swing.*;
 
 import com.dam.control.Controlador;
-import com.dam.model.Entidad;
+import com.dam.model.Restaurante;
 
 public class ModificaRestaurante extends JPanel implements IPanel{
     public static final int ANCHO = 600;
     public static final int ALTO = 400;
-    public static final String COMANDO_BTN1="boton1";
+    public static final String COMANDO_BTN_MODIFICAR="Modificar";
+    public static final String COMANDO_BTN_CANCELAR="Cancelar";
+    public static final String COMANDO_BTN_BUSCAR="Buscar";
 
-    private JRadioButton rdbtn1;
-    private JRadioButton rdbtn2;
-    private JTextField textField;
-    private JCheckBox chkbox;
-    private JCheckBox chkbox2;
-    private JSpinner spinner;
-    private JButton boton;
-    private JComboBox<String> cmbFrecuencia;
+    private JLabel lblNombre;
+    private JLabel lblDireccin;
+    private JLabel lblTelfono;
+    private JLabel lblDistincin;
+    private JLabel lblRegion;
+    private JLabel lblWeb;
+    private JLabel lblPrecioMnimo;
+    private JLabel lblPrecioMximo;
+    private JLabel lblCiudad;
+    private JLabel lblCocina;
+    private JTextField tfNombre;
+    private JTextField tfDireccion;
+    private JTextField tfTelefono;
+    private JTextField tfCiudad;
+    private JTextField tfWeb;
+    private JTextField tfPrecioMinimo;
+    private JTextField tfPrecioMaximo;
+    JButton btnCancelar;
+    JButton btnModificar;
+    JButton btnBuscar;
+    JSpinner spinnerDistincion;
     
 
     public ModificaRestaurante(){
@@ -30,113 +47,126 @@ public class ModificaRestaurante extends JPanel implements IPanel{
 
     @Override
     public void crearComponentes() {
-        JLabel label=new JLabel("Mostrar");
-        label.setBounds(100,100,100,20);
-        add(label);
-
-        textField=new JTextField();
-        textField.setBounds(100,120,100,20);
-        add(textField);
-
-        boton=new JButton(COMANDO_BTN1);
-        boton.setActionCommand(COMANDO_BTN1);
-        boton.setBounds(100,140,100,20);
-        add(boton);
-
+        JLabel lblTitulo = new JLabel("Modificar Restaurante");
+        lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        lblTitulo.setBounds(22, 11, 269, 36);
+        add(lblTitulo);
         
-        chkbox=new JCheckBox("check1");
-        chkbox.setBounds(100,160,100,20);
-        add(chkbox);
-
-        chkbox2=new JCheckBox("check2");
-        chkbox2.setBounds(100,180,100,20);
-        add(chkbox2);
-
-        spinner=new JSpinner();
-        spinner.setBounds(200,180,100,20);
-        spinner.setModel(new SpinnerNumberModel(0, 0, 100, 1));
-        add(spinner);
+        lblNombre = new JLabel("Nombre:");
+        lblNombre.setBounds(32, 58, 82, 14);
+        add(lblNombre);
         
-        ButtonGroup btngEdad = new ButtonGroup();
-        rdbtn1 = new JRadioButton("radio1");
-        btngEdad.add(rdbtn1);
-        rdbtn1.setBounds(345, 53, 100, 20);
-        add(rdbtn1);
-
-        rdbtn2 = new JRadioButton("radio2");
-        btngEdad.add(rdbtn2);
-        rdbtn2.setBounds(345, 73, 100, 20);
-        add(rdbtn2);
+        lblDireccin = new JLabel("Dirección:");
+        lblDireccin.setBounds(32, 195, 82, 14);
+        add(lblDireccin);
         
-
-        String[] opciones = {"A", "B", "C"};
-        DefaultComboBoxModel<String> cmbModel = new DefaultComboBoxModel<String>(opciones);
-        cmbFrecuencia= new JComboBox<String>();
-        cmbFrecuencia.setModel(cmbModel);
-        cmbFrecuencia.setBounds(150, 100, 175, 20);
-        add(cmbFrecuencia);
-
-    }
+        lblTelfono = new JLabel("Teléfono");
+        lblTelfono.setBounds(32, 280, 82, 14);
+        add(lblTelfono);
+        
+        lblDistincin = new JLabel("Distinción");
+        lblDistincin.setBounds(32, 236, 82, 14);
+        add(lblDistincin);
+        
+        lblRegion = new JLabel("Region:");
+        lblRegion.setBounds(32, 154, 82, 14);
+        add(lblRegion);
+        
+        lblWeb = new JLabel("Web");
+        lblWeb.setBounds(234, 280, 82, 14);
+        add(lblWeb);
+        
+        lblPrecioMnimo = new JLabel("Precio mínimo:");
+        lblPrecioMnimo.setBounds(160, 236, 108, 14);
+        add(lblPrecioMnimo);
+        
+        lblPrecioMximo = new JLabel("máximo:");
+        lblPrecioMximo.setBounds(359, 236, 108, 14);
+        add(lblPrecioMximo);
+        
+        lblCiudad = new JLabel("Ciudad");
+        lblCiudad.setBounds(234, 154, 82, 14);
+        add(lblCiudad);
+        
+        lblCocina = new JLabel("Cocina");
+        lblCocina.setBounds(32, 109, 82, 14);
+        add(lblCocina);
+        
+        tfNombre = new JTextField();
+        tfNombre.setBounds(101, 55, 190, 20);
+        add(tfNombre);
+        tfNombre.setColumns(10);
+        
+        tfDireccion = new JTextField();
+        tfDireccion.setBounds(101, 192, 420, 20);
+        add(tfDireccion);
+        tfDireccion.setColumns(10);
+        
+        tfTelefono = new JTextField();
+        tfTelefono.setBounds(101, 277, 119, 20);
+        add(tfTelefono);
+        tfTelefono.setColumns(10);
+        
+        JComboBox<String> comboCocina = new JComboBox<String>();
+        comboCocina.setBounds(101, 105, 119, 22);
+        add(comboCocina);
+        
+        tfCiudad = new JTextField();
+        tfCiudad.setBounds(311, 151, 214, 20);
+        add(tfCiudad);
+        tfCiudad.setColumns(10);
+        
+        tfWeb = new JTextField();
+        tfWeb.setBounds(263, 277, 262, 20);
+        add(tfWeb);
+        tfWeb.setColumns(10);
+        
+        btnModificar = new JButton(COMANDO_BTN_MODIFICAR);
+        btnModificar.setActionCommand(COMANDO_BTN_MODIFICAR);
+        btnModificar.setBounds(160, 327, 136, 23);
+        add(btnModificar);
+        
+        btnCancelar = new JButton(COMANDO_BTN_CANCELAR);
+        btnCancelar.setActionCommand(COMANDO_BTN_CANCELAR);
+        btnCancelar.setBounds(311, 327, 136, 23);
+        add(btnCancelar);
+        
+        tfPrecioMinimo = new JTextField();
+        tfPrecioMinimo.setBounds(257, 233, 92, 20);
+        add(tfPrecioMinimo);
+        tfPrecioMinimo.setColumns(10);
+        
+        tfPrecioMaximo = new JTextField();
+        tfPrecioMaximo.setBounds(433, 233, 92, 20);
+        add(tfPrecioMaximo);
+        tfPrecioMaximo.setColumns(10);
+        
+        JComboBox<String> comboRegion = new JComboBox<String>();
+        comboRegion.setBounds(101, 150, 119, 22);
+        add(comboRegion);
+        
+        spinnerDistincion = new JSpinner();
+        spinnerDistincion.setBounds(101, 233, 45, 20);
+        add(spinnerDistincion);    
+        
+        btnBuscar = new JButton(COMANDO_BTN_BUSCAR);
+        btnBuscar.setActionCommand(COMANDO_BTN_BUSCAR);
+        btnBuscar.setBounds(311, 54, 136, 23);
+        add(btnBuscar);}
 
     public void limpiarValores(){
-        textField.setText("");
-        rdbtn1.setSelected(true);
-        rdbtn2.setSelected(false);
-        chkbox.setSelected(false);
-        chkbox2.setSelected(false);
-        spinner.setValue(0);
-        cmbFrecuencia.setSelectedIndex(0);
+
     }
 
 
-    public Entidad leerValores(){
-        String texto1=textField.getText();
-
-
-
-        String texto2=(String)cmbFrecuencia.getSelectedItem();
-
-
-
-        String texto3="";
-        if(rdbtn1.isSelected()){
-            texto3=rdbtn1.getText();
-        }
-        else if(rdbtn2.isSelected()){
-            texto3=rdbtn1.getText();
-        }
-
-
-        String texto4="";
-        if(chkbox.isSelected()){
-            if(!texto4.isEmpty()){
-                texto4+=", ";
-            }
-            texto4+=chkbox.getText();
-        }
-        if(chkbox2.isSelected()){
-            if(!texto4.isEmpty()){
-                texto4+=", ";
-            }
-            texto4+=chkbox2.getText();
-        }
-
-
-        int numero=(int)spinner.getValue();
-
-        System.out.println(texto1);
-        System.out.println(texto2);
-        System.out.println(texto3);
-        System.out.println(texto4);
-        System.out.println(numero);
-
-        return new Entidad(texto1,texto2,texto3,texto4,numero);
+    public Restaurante leerValores(){
+        return null;
     }
 
     @Override
     public void setControlador(Controlador c) {
-        boton.addActionListener(c);
+        btnModificar.addActionListener(c);
+        btnCancelar.addActionListener(c);
+        btnBuscar.addActionListener(c);
     }
-
-
 }

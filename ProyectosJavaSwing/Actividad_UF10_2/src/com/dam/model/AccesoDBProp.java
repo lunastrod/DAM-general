@@ -17,7 +17,6 @@ public class AccesoDBProp {
 	public AccesoDBProp() {
 		Properties prop = new Properties();
 		InputStream is = null;
-		
 		try {
 			is = new FileInputStream("DB/ConfiguracionDB.properties");
 			prop.load(is);
@@ -32,8 +31,6 @@ public class AccesoDBProp {
 			e.printStackTrace();
 			System.out.println("No se ha podido leer el fichero");
 		}
-		
-		
 	}
 	
 	public Connection getConexion() throws ClassNotFoundException, SQLException {

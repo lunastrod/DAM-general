@@ -8,8 +8,8 @@ import java.awt.*;
 
 
 public class VentanaPrincipal extends JFrame implements IVentana{
-    public static final int ANCHO = 600;
-    public static final int ALTO = 400;
+    public static final int ANCHO = 800;
+    public static final int ALTO = 500;
 
     public static final String COMANDO_MENU_CONSULTA="Consulta de Restaurantes";
     public static final String COMANDO_MENU_REGISTRO="Registro de Restaurante";
@@ -97,5 +97,17 @@ public class VentanaPrincipal extends JFrame implements IVentana{
     }
 	public void hacerVisible(){
         setVisible(true);
+    }
+
+    public void mensajeError(String mensaje,String titulo){
+        JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void mensajeInfo(String mensaje,String titulo){
+        JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    public void mensajeAlerta(String mensaje,String titulo){
+        JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.WARNING_MESSAGE);
     }
 }

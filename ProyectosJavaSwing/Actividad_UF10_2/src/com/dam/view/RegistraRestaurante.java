@@ -6,13 +6,14 @@ import java.awt.Font;
 import javax.swing.*;
 
 import com.dam.control.Controlador;
-import com.dam.model.Entidad;
+import com.dam.model.Restaurante;
 
 public class RegistraRestaurante extends JPanel implements IPanel{
     public static final int ANCHO = 600;
     public static final int ALTO = 400;
-    public static final String COMANDO_BTN1="boton1";
-    private JLabel lblNewLabel;
+    public static final String COMANDO_BTN_GUARDAR="Guardar Datos";
+    public static final String COMANDO_BTN_LIMPIAR="Limpiar Datos";
+    private JLabel lblNombre;
     private JLabel lblDireccin;
     private JLabel lblTelfono;
     private JLabel lblDistincin;
@@ -22,13 +23,16 @@ public class RegistraRestaurante extends JPanel implements IPanel{
     private JLabel lblPrecioMximo;
     private JLabel lblCiudad;
     private JLabel lblCocina;
-    private JTextField textField;
-    private JTextField textField_1;
-    private JTextField textField_2;
-    private JTextField textField_3;
-    private JTextField textField_4;
-    private JTextField textField_5;
-    private JTextField textField_6;
+    private JTextField tfNombre;
+    private JTextField tfDireccion;
+    private JTextField tfTelefono;
+    private JTextField tfCiudad;
+    private JTextField tfWeb;
+    private JTextField tfPrecioMinimo;
+    private JTextField tfPrecioMaximo;
+    JButton btnLimpiar;
+    JButton btnGuardar;
+    JSpinner spinnerDistincion;
     
 
     public RegistraRestaurante(){
@@ -42,162 +46,118 @@ public class RegistraRestaurante extends JPanel implements IPanel{
     public void crearComponentes() {
         JLabel lblTitulo = new JLabel("Registrar Restaurante");
         lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 20));
-        lblTitulo.setBounds(25, 25, 269, 36);
+        lblTitulo.setBounds(22, 11, 269, 36);
         add(lblTitulo);
         
-        lblNewLabel = new JLabel("Nombre:");
-        lblNewLabel.setBounds(22, 88, 82, 14);
-        add(lblNewLabel);
+        lblNombre = new JLabel("Nombre:");
+        lblNombre.setBounds(32, 91, 82, 14);
+        add(lblNombre);
         
         lblDireccin = new JLabel("Dirección:");
-        lblDireccin.setBounds(32, 162, 82, 14);
+        lblDireccin.setBounds(32, 177, 82, 14);
         add(lblDireccin);
         
         lblTelfono = new JLabel("Teléfono");
-        lblTelfono.setBounds(51, 279, 82, 14);
+        lblTelfono.setBounds(32, 262, 82, 14);
         add(lblTelfono);
         
         lblDistincin = new JLabel("Distinción");
-        lblDistincin.setBounds(25, 204, 82, 14);
+        lblDistincin.setBounds(32, 218, 82, 14);
         add(lblDistincin);
         
         lblRegion = new JLabel("Region:");
-        lblRegion.setBounds(22, 121, 82, 14);
+        lblRegion.setBounds(32, 136, 82, 14);
         add(lblRegion);
         
         lblWeb = new JLabel("Web");
-        lblWeb.setBounds(201, 279, 82, 14);
+        lblWeb.setBounds(234, 262, 82, 14);
         add(lblWeb);
         
-        lblPrecioMnimo = new JLabel("Precio mínimo");
-        lblPrecioMnimo.setBounds(238, 204, 82, 14);
+        lblPrecioMnimo = new JLabel("Precio mínimo:");
+        lblPrecioMnimo.setBounds(160, 218, 108, 14);
         add(lblPrecioMnimo);
         
-        lblPrecioMximo = new JLabel("máximo");
-        lblPrecioMximo.setBounds(405, 204, 82, 14);
+        lblPrecioMximo = new JLabel("máximo:");
+        lblPrecioMximo.setBounds(359, 218, 108, 14);
         add(lblPrecioMximo);
         
         lblCiudad = new JLabel("Ciudad");
-        lblCiudad.setBounds(238, 121, 82, 14);
+        lblCiudad.setBounds(234, 136, 82, 14);
         add(lblCiudad);
         
         lblCocina = new JLabel("Cocina");
-        lblCocina.setBounds(238, 88, 82, 14);
+        lblCocina.setBounds(230, 91, 82, 14);
         add(lblCocina);
         
-        textField = new JTextField();
-        textField.setBounds(105, 85, 86, 20);
-        add(textField);
-        textField.setColumns(10);
+        tfNombre = new JTextField();
+        tfNombre.setBounds(101, 88, 119, 20);
+        add(tfNombre);
+        tfNombre.setColumns(10);
         
-        textField_1 = new JTextField();
-        textField_1.setBounds(105, 159, 359, 20);
-        add(textField_1);
-        textField_1.setColumns(10);
+        tfDireccion = new JTextField();
+        tfDireccion.setBounds(101, 174, 420, 20);
+        add(tfDireccion);
+        tfDireccion.setColumns(10);
         
-        JComboBox comboBox = new JComboBox();
-        comboBox.setBounds(105, 200, 86, 22);
-        add(comboBox);
+        tfTelefono = new JTextField();
+        tfTelefono.setBounds(101, 259, 119, 20);
+        add(tfTelefono);
+        tfTelefono.setColumns(10);
         
-        textField_2 = new JTextField();
-        textField_2.setBounds(105, 276, 86, 20);
-        add(textField_2);
-        textField_2.setColumns(10);
+        JComboBox<String> comboCocina = new JComboBox<String>();
+        comboCocina.setBounds(307, 87, 119, 22);
+        add(comboCocina);
         
-        JComboBox comboBox_1 = new JComboBox();
-        comboBox_1.setBounds(365, 84, 67, 22);
-        add(comboBox_1);
+        tfCiudad = new JTextField();
+        tfCiudad.setBounds(311, 133, 214, 20);
+        add(tfCiudad);
+        tfCiudad.setColumns(10);
         
-        textField_3 = new JTextField();
-        textField_3.setBounds(358, 118, 86, 20);
-        add(textField_3);
-        textField_3.setColumns(10);
+        tfWeb = new JTextField();
+        tfWeb.setBounds(263, 259, 262, 20);
+        add(tfWeb);
+        tfWeb.setColumns(10);
         
-        textField_4 = new JTextField();
-        textField_4.setBounds(234, 276, 86, 20);
-        add(textField_4);
-        textField_4.setColumns(10);
+        btnGuardar = new JButton("Guardar Datos");
+        btnGuardar.setBounds(160, 327, 136, 23);
+        add(btnGuardar);
         
-        JButton btnNewButton = new JButton("Guardar Datos");
-        btnNewButton.setBounds(103, 327, 108, 23);
-        add(btnNewButton);
+        btnLimpiar = new JButton("Limpiar Datos");
+        btnLimpiar.setBounds(311, 327, 136, 23);
+        add(btnLimpiar);
         
-        JButton btnNewButton_1 = new JButton("Limpiar Datos");
-        btnNewButton_1.setBounds(234, 327, 115, 23);
-        add(btnNewButton_1);
+        tfPrecioMinimo = new JTextField();
+        tfPrecioMinimo.setBounds(257, 215, 92, 20);
+        add(tfPrecioMinimo);
+        tfPrecioMinimo.setColumns(10);
         
-        textField_5 = new JTextField();
-        textField_5.setBounds(311, 201, 86, 20);
-        add(textField_5);
-        textField_5.setColumns(10);
+        tfPrecioMaximo = new JTextField();
+        tfPrecioMaximo.setBounds(433, 215, 92, 20);
+        add(tfPrecioMaximo);
+        tfPrecioMaximo.setColumns(10);
         
-        textField_6 = new JTextField();
-        textField_6.setBounds(456, 201, 86, 20);
-        add(textField_6);
-        textField_6.setColumns(10);
+        JComboBox<String> comboRegion = new JComboBox<String>();
+        comboRegion.setBounds(101, 132, 119, 22);
+        add(comboRegion);
         
-        JComboBox comboBox_2 = new JComboBox();
-        comboBox_2.setBounds(105, 117, 86, 22);
-        add(comboBox_2);
-        
-        ButtonGroup btngEdad = new ButtonGroup();
-        
-
-        String[] opciones = {"A", "B", "C"};
-        DefaultComboBoxModel<String> cmbModel = new DefaultComboBoxModel<String>(opciones);
-
+        spinnerDistincion = new JSpinner();
+        spinnerDistincion.setBounds(101, 215, 45, 20);
+        add(spinnerDistincion);
     }
 
     public void limpiarValores(){
+
     }
 
 
-    public Entidad leerValores(){
-        String texto1=textField.getText();
-
-
-
-        String texto2=(String)cmbFrecuencia.getSelectedItem();
-
-
-
-        String texto3="";
-        if(rdbtn1.isSelected()){
-            texto3=rdbtn1.getText();
-        }
-        else if(rdbtn2.isSelected()){
-            texto3=rdbtn1.getText();
-        }
-
-
-        String texto4="";
-        if(chkbox.isSelected()){
-            if(!texto4.isEmpty()){
-                texto4+=", ";
-            }
-            texto4+=chkbox.getText();
-        }
-        if(chkbox2.isSelected()){
-            if(!texto4.isEmpty()){
-                texto4+=", ";
-            }
-            texto4+=chkbox2.getText();
-        }
-
-
-        int numero=(int)spinner.getValue();
-
-        System.out.println(texto1);
-        System.out.println(texto2);
-        System.out.println(texto3);
-        System.out.println(texto4);
-        System.out.println(numero);
-
-        return new Entidad(texto1,texto2,texto3,texto4,numero);
+    public Restaurante leerValores(){
+        return null;
     }
 
     @Override
     public void setControlador(Controlador c) {
-        boton.addActionListener(c);
+        btnGuardar.addActionListener(c);
+        btnLimpiar.addActionListener(c);
+        
     }
 }

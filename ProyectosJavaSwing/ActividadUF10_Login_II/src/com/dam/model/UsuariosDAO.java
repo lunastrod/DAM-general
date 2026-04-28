@@ -9,7 +9,6 @@ import java.util.ArrayList;
 
 // clase para manejar la información de la tabla USUARIOS
 public class UsuariosDAO {
-	
 	static final String NOM_TABLA = "USUARIOS";
 	static final String COL_USUARIO = "USUARIO";
 	static final String COL_PWD = "PASSWORD";
