@@ -54,32 +54,28 @@ public class Controlador implements ActionListener {
                     break;
                 case VentanaPrincipal.COMANDO_MENU_REGISTRO:
                     v.cargarPanel(p2);
-                    p2.actualizaComboRegion(dao.consultarRegiones());
                     break;
                 case VentanaPrincipal.COMANDO_MENU_MODIFICACION:
+                    p3.limpiarValores();
+                    p3.mostrarDatos(false);
+                    p3.bloqueaBusqueda(false);
                     v.cargarPanel(p3);
                     break;
                 case VentanaPrincipal.COMANDO_MENU_SALIR:
-                    System.exit(0);
+                    if(v.mensajeConfirmacion("Se va a cerrar la aplicación, ¿desea continuar?", "Confirmación")){
+                        System.exit(0);
+                    }
+                    break;
                 default:
                     System.out.println("Comando no reconocido");
                     break;
             }
         }
         else if(e.getSource() instanceof JButton){
+            Restaurante r;
             switch (comando) {
                 case ConsultaRestaurantes.COMANDO_BTN_CONSULTAR:
-                    String d=RestauranteDAO.FILTRO_TODAS;
-                    if(p1.getDistincion().equals("1 estrella")){
-                        d="1";
-                    }
-                    else if(p1.getDistincion().equals("2 estrellas")){
-                        d="2";
-                    }
-                    else if(p1.getDistincion().equals("3 estrellas")){
-                        d="3";
-                    }
-                    actualizaTablaRestaurantes(d,p1.getRegion());
+                    actualizaTablaRestaurantes(p1.getDistincion(),p1.getRegion());
                     break;
                 case ConsultaRestaurantes.COMANDO_BTN_ELIMINAR:
                     String nombreRestaurante=p1.getRestauranteSeleccionado();
@@ -87,7 +83,7 @@ public class Controlador implements ActionListener {
                         if(v.mensajeConfirmacion("Se va a eliminar el registro seleccionado, ¿desea continuar?", "Confirmación")){
                             dao.eliminarRestaurante(nombreRestaurante);
                             v.mensajeInfo("Se ha eliminado el restaurante con éxito","Resultado de operación");
-                            actualizaTablaRestaurantes(RestauranteDAO.FILTRO_TODAS, RestauranteDAO.FILTRO_TODAS);
+                            actualizaTablaRestaurantes(p1.getDistincion(),p1.getRegion());
                         }
                     }
                     else{
@@ -96,19 +92,52 @@ public class Controlador implements ActionListener {
 
                     break;
                 case ModificaRestaurante.COMANDO_BTN_BUSCAR:
+                    String nombre=p3.getNombre();
+                    if(nombre!=null){
+                        r=dao.buscaRestauranteNombreParecido(nombre);
+                        if(r!=null){
+                            p3.cargarValores(r);
+                            p3.mostrarDatos(true);
+                            p3.bloqueaBusqueda(true);
+                        }
+                        else{
+                            v.mensajeInfo("No se ha encontrado ningún restaurante para el dato introducido","Información de Consulta");
+                            p3.mostrarDatos(false);
+                        }
+                    }
                     
                     break;
                 case ModificaRestaurante.COMANDO_BTN_MODIFICAR:
-                    
+                    r=p3.leerValores();
+                    if(r!=null){
+                        dao.modificaRestaurante(r);
+                        v.mensajeInfo("Se ha modificado el restaurante con éxito","Resultado de operación");
+                        p3.mostrarDatos(false);
+                        p3.bloqueaBusqueda(false);
+                        System.out.println(r);
+                    }
                     break;
                 case ModificaRestaurante.COMANDO_BTN_CANCELAR:
-                    
+                    p3.mostrarDatos(false);
+                    p3.bloqueaBusqueda(false);
+                    p3.limpiarValores();
                     break;
                 case RegistraRestaurante.COMANDO_BTN_GUARDAR:
-                    
+                    r=p2.leerValores();
+                    if(r!=null){
+                        p2.limpiarValores();
+                        if(dao.buscaRestauranteNombre(r.getNombre())!=null){
+                            v.mensajeError("Ya existe un restaurante con el nombre introducido","Resultado de operación");
+                        }
+                        else{
+                            System.out.println(r);
+                            dao.insertarRestaurante(r);
+                            v.mensajeInfo("Se ha registrado el restaurante con éxito","Resultado de operación");
+                        }
+                    }
                     break;
                 case RegistraRestaurante.COMANDO_BTN_LIMPIAR:
-                    
+                    p2.limpiarValores();
                     break;
                 default:
                     System.out.println("Comando no reconocido");

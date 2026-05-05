@@ -11,6 +11,7 @@ public class Inicio {
                 VentanaPrincipal ventana=new VentanaPrincipal();
                 ConsultaRestaurantes panel=new ConsultaRestaurantes();
                 RegistraRestaurante panel2=new RegistraRestaurante();
+                
                 ModificaRestaurante panel3=new ModificaRestaurante();
                 AccesoDBProp acc=new AccesoDBProp();
                 RestauranteDAO dao=new RestauranteDAO(acc);

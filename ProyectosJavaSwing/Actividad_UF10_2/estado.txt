@@ -1,0 +1,47 @@
+#	Requisito	Estado
+Ejercicio 1 — Consulta de restaurantes
+1	Ventana principal con JFrame	OK
+2	Menú con 4 opciones (Consulta, Registro, Modificación, Salir)	OK
+3	Panel ConsultaRestaurantes dentro de la ventana	OK
+4	Combo Región con regiones de la BBDD + opción TODAS	OK
+5	Combo Distinción con TODAS, 1 estrella, 2 estrellas, 3 estrellas	OK
+6	Sin filtro muestra todos los restaurantes	OK
+7	Tabla muestra Nombre, Ciudad, Distinción, Cocina, Precio	OK
+8a 	Distinción se muestra con estrellas (★) 	OK
+8b 	Si no hay precio máximo, solo se muestra el mínimo 	FALLA
+getFila() siempre concatena "precioMinimo - precioMaximo" sin comprobar si precioMaximo es 0 o nulo
+9	Sin resultados: mensaje informativo y tabla oculta	OK
+10	Filtros por región y/o distinción funcionan correctamente	OK
+Ejercicio 2 — Eliminación
+11	Eliminar sin selección muestra mensaje de error	OK
+12	Eliminar con selección muestra confirmación	OK
+13	Confirmar elimina el registro y refresca la tabla	OK
+Ejercicio 3 — Registro de restaurante
+14	Panel RegistraRestaurante dentro de la ventana	OK
+15	Combo Región con las 17 comunidades	OK
+16	Combo Cocina con 5 opciones	OK
+17	Spinner Distinción rango 1–3	OK
+18 	Validaciones al guardar (nombre, ciudad, precios opcionales y coherentes) 	FALLA
+Los campos de precio no son opcionales: si se dejan vacíos, Double.parseDouble() lanza NumberFormatException en lugar de tratarlos como 0
+19	Guardar: inserta en BBDD, muestra mensaje, limpia formulario	OK
+20	Botón Limpiar restablece todos los campos	OK
+21	Nombre duplicado: no inserta y muestra mensaje	OK
+Ejercicio 4 — Modificación de restaurante
+22	Panel ModificaRestaurante dentro de la ventana	OK
+23	Al cargar, solo habilitados nombre y botón Buscar	OK
+24–26	Combos Región/Cocina y spinner Distinción correctos	OK
+27	Buscar sin nombre muestra mensaje	OK
+28	Buscar sin resultado muestra mensaje informativo	OK
+29 	Al encontrar restaurante: carga datos, habilita campos y deshabilita nombre y Buscar 	FALLA
+mostrarDatos(true) habilita los campos pero nunca deshabilita tfNombre ni btnBuscar. El requisito exige que queden deshabilitados tras la búsqueda
+30 	Validaciones al modificar (ciudad, precios opcionales y coherentes) 	FALLA
+Mismo problema que punto 18: precios vacíos lanzan excepción en lugar de permitirse
+31	Modificar: actualiza en BBDD y muestra mensaje	OK
+32	Cancelar: limpia campos y deshabilita todo salvo nombre y Buscar	OK
+Ejercicio 5 — Salir
+33	Salir pide confirmación antes de cerrar	OK
+Ejercicio 6 — Carga de combos desde BBDD
+34 	Combos de Región y Cocina cargados desde la BBDD en todos los paneles 	PARCIAL
+El combo Región de Consulta sí se carga desde BBDD. Pero Región y Cocina en Registro y Modificación usan arrays estáticos (Restaurante.REGIONES / COCINAS) en lugar de consultar la tabla
+
+//TODO: debe buscar que empiece por, no igual

@@ -30,6 +30,173 @@ public class RestauranteDAO {
         this.acc = acc;
     }
 
+    public void modificaRestaurante(Restaurante r) {
+        String sentencia = "UPDATE " + NOM_TABLA_RESTAURANTES + " SET " +
+            COL_NOMBRE + " = ?, " +
+            COL_REGION + " = ?, " +
+            COL_CIUDAD + " = ?, " +
+            COL_DISTINCION + " = ?, " +
+            COL_DIRECCION + " = ?, " +
+            COL_PRECIO_MINIMO + " = ?, " +
+            COL_PRECIO_MAXIMO + " = ?, " +
+            COL_COCINA + " = ?, " +
+            COL_TELEFONO + " = ?, " +
+            COL_WEB + " = ? " +
+            "WHERE " + COL_ID + " = ?";
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = acc.getConexion();
+            stmt = con.prepareStatement(sentencia);
+            stmt.setString(1, r.getNombre());
+            stmt.setString(2, r.getRegion());
+            stmt.setString(3, r.getCiudad());
+            stmt.setInt(4, r.getDistincion());
+            stmt.setString(5, r.getDireccion());
+            stmt.setDouble(6, r.getPrecioMinimo());
+            stmt.setDouble(7, r.getPrecioMaximo());
+            stmt.setString(8, r.getCocina());
+            stmt.setString(9, r.getTelefono());
+            stmt.setString(10, r.getWeb());
+            stmt.setInt(11, r.getId());
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar los recursos: " + e.getMessage());
+            }
+        }
+    }
+    
+    public Restaurante buscaRestauranteNombre(String nombre) {
+        String sentencia = "SELECT * FROM " + NOM_TABLA_RESTAURANTES + " WHERE " + COL_NOMBRE + " = ?";
+        Connection con = null;
+        PreparedStatement stmt = null;
+        Restaurante restaurante = null;
+        try {
+            con = acc.getConexion();
+            stmt = con.prepareStatement(sentencia);
+            stmt.setString(1, nombre);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                restaurante = new Restaurante(
+                    rs.getInt(COL_ID),
+                    rs.getString(COL_NOMBRE),
+                    rs.getString(COL_REGION),
+                    rs.getString(COL_CIUDAD),
+                    rs.getInt(COL_DISTINCION),
+                    rs.getString(COL_DIRECCION),
+                    rs.getDouble(COL_PRECIO_MINIMO),
+                    rs.getDouble(COL_PRECIO_MAXIMO),
+                    rs.getString(COL_COCINA),
+                    rs.getString(COL_TELEFONO),
+                    rs.getString(COL_WEB)
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar los recursos: " + e.getMessage());
+            }
+        }
+        return restaurante;
+    }
+
+    public Restaurante buscaRestauranteNombreParecido(String nombre) {
+        String sentencia = "SELECT * FROM " + NOM_TABLA_RESTAURANTES + " WHERE " + COL_NOMBRE + " LIKE ? ORDER BY LENGTH("+COL_NOMBRE+") ASC LIMIT 1";
+        Connection con = null;
+        PreparedStatement stmt = null;
+        Restaurante restaurante = null;
+        try {
+            con = acc.getConexion();
+            stmt = con.prepareStatement(sentencia);
+            stmt.setString(1, "%"+nombre+"%");
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                restaurante = new Restaurante(
+                    rs.getInt(COL_ID),
+                    rs.getString(COL_NOMBRE),
+                    rs.getString(COL_REGION),
+                    rs.getString(COL_CIUDAD),
+                    rs.getInt(COL_DISTINCION),
+                    rs.getString(COL_DIRECCION),
+                    rs.getDouble(COL_PRECIO_MINIMO),
+                    rs.getDouble(COL_PRECIO_MAXIMO),
+                    rs.getString(COL_COCINA),
+                    rs.getString(COL_TELEFONO),
+                    rs.getString(COL_WEB)
+                );
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar los recursos: " + e.getMessage());
+            }
+        }
+        return restaurante;
+    }
+
+    public void insertarRestaurante(Restaurante restaurante) {
+        String sentencia = "INSERT INTO " + NOM_TABLA_RESTAURANTES + " (" +
+            COL_NOMBRE + ", " +
+            COL_REGION + ", " +
+            COL_CIUDAD + ", " +
+            COL_DISTINCION + ", " +
+            COL_DIRECCION + ", " +
+            COL_PRECIO_MINIMO + ", " +
+            COL_PRECIO_MAXIMO + ", " +
+            COL_COCINA + ", " +
+            COL_TELEFONO + ", " +
+            COL_WEB +
+        ") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        
+        Connection con = null;
+        PreparedStatement stmt = null;
+        try {
+            con = acc.getConexion();
+            stmt = con.prepareStatement(sentencia);
+            stmt.setString(1, restaurante.getNombre());
+            stmt.setString(2, restaurante.getRegion());
+            stmt.setString(3, restaurante.getCiudad());
+            stmt.setInt(4, restaurante.getDistincion());
+            stmt.setString(5, restaurante.getDireccion());
+            stmt.setDouble(6, restaurante.getPrecioMinimo());
+            stmt.setDouble(7, restaurante.getPrecioMaximo());
+            stmt.setString(8, restaurante.getCocina());
+            stmt.setString(9, restaurante.getTelefono());
+            stmt.setString(10, restaurante.getWeb());
+            
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                if (stmt != null) stmt.close();
+                if (con != null) con.close();
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar los recursos: " + e.getMessage());
+            }
+        }
+    }
+
     public void eliminarRestaurante(String nombre){
         String sentencia="DELETE FROM " + NOM_TABLA_RESTAURANTES + " WHERE " + COL_NOMBRE + " = ?";
         Connection con = null;
@@ -114,7 +281,7 @@ public class RestauranteDAO {
             con = acc.getConexion();
             stmt = con.prepareStatement(sentencia);
             if(!distincion.equals(FILTRO_TODAS) && !region.equals(FILTRO_TODAS)){
-                stmt.setString(1, distincion);
+                stmt.setInt(1, Integer.parseInt(distincion));
                 stmt.setString(2, region);
             } else if(!distincion.equals(FILTRO_TODAS)){
                 stmt.setString(1, distincion);

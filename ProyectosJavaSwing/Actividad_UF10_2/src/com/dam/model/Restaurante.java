@@ -1,7 +1,42 @@
 package com.dam.model;
 
+/*
+15. El combo Región deberá contener las siguientes opciones:
+Andalucía
+Aragón
+Asturias
+Islas Baleares
+Cantabria
+Islas Canarias
+Castilla - La Mancha
+Castilla y León
+Cataluña
+Galicia
+Extremadura
+Madrid
+Murcia
+Navarra
+País Vasco
+La Rioja
+Comunidad Valenciana
+16. El combo Cocina deberá contener las siguientes opciones:
+Creativa
+Moderna
+Tradicional
+Regional
+Fusión
+*/
+
 public class Restaurante {
     public static final String[] COLUMNAS = {"Nombre", "Ciudad", "Distinción", "Cocina", "Precio"};
+    public static final String[] REGIONES = {
+        "Andalucía", "Aragón", "Asturias", "Islas Baleares", "Cantabria", "Islas Canarias",
+        "Castilla - La Mancha", "Castilla y León", "Cataluña", "Galicia", "Extremadura",
+        "Madrid", "Murcia", "Navarra", "País Vasco", "La Rioja", "Comunidad Valenciana"
+    };
+    public static final String[] COCINAS = {
+        "Creativa", "Moderna", "Tradicional", "Regional", "Fusión"
+    };
 
     private int id;
     private String nombre;
@@ -73,8 +108,12 @@ public class Restaurante {
             fila[2]+="★";
         }
         fila[3]=cocina;
-        fila[4]=precioMinimo+" - "+precioMaximo;
-        
+        if(precioMaximo==0){
+            fila[4]=String.valueOf(precioMinimo);
+        }
+        else{
+            fila[4]=precioMinimo+" - "+precioMaximo;
+        }
         return fila;
     }
 
