@@ -74,7 +74,17 @@ public class ConsultaRestaurantes extends JPanel implements IPanel{
     }
 
     public String getDistincion() {
-        return (String) comboBoxDistincion.getSelectedItem();
+        String d=(String) comboBoxDistincion.getSelectedItem();
+        if(d.equals("1 estrella")){
+            d="1";
+        }
+        else if(d.equals("2 estrellas")){
+            d="2";
+        }
+        else if(d.equals("3 estrellas")){
+            d="3";
+        }
+        return d;
     }
 
     public String getRestauranteSeleccionado() {//retorna nombre

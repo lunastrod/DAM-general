@@ -25,6 +25,7 @@ public class ModificaRestaurante extends JPanel implements IPanel{
     private JLabel lblPrecioMximo;
     private JLabel lblCiudad;
     private JLabel lblCocina;
+    private int idRestaurante;
     private JTextField tfNombre;
     private JTextField tfDireccion;
     private JTextField tfTelefono;
@@ -36,13 +37,18 @@ public class ModificaRestaurante extends JPanel implements IPanel{
     JButton btnModificar;
     JButton btnBuscar;
     JSpinner spinnerDistincion;
+
+    JComboBox<String> comboRegion;
+    JComboBox<String> comboCocina;
+    DefaultComboBoxModel<String> modelComboRegion;
+    DefaultComboBoxModel<String> modelComboCocina;
+    
     
 
     public ModificaRestaurante(){
         setSize(ANCHO,ALTO);
         setLayout(null);
         crearComponentes();
-        limpiarValores();
     }
 
     @Override
@@ -107,8 +113,10 @@ public class ModificaRestaurante extends JPanel implements IPanel{
         add(tfTelefono);
         tfTelefono.setColumns(10);
         
-        JComboBox<String> comboCocina = new JComboBox<String>();
+        comboCocina = new JComboBox<String>();
         comboCocina.setBounds(101, 105, 119, 22);
+        modelComboCocina = new DefaultComboBoxModel<String>(Restaurante.COCINAS);
+        comboCocina.setModel(modelComboCocina);
         add(comboCocina);
         
         tfCiudad = new JTextField();
@@ -141,11 +149,13 @@ public class ModificaRestaurante extends JPanel implements IPanel{
         add(tfPrecioMaximo);
         tfPrecioMaximo.setColumns(10);
         
-        JComboBox<String> comboRegion = new JComboBox<String>();
+        comboRegion = new JComboBox<String>();
         comboRegion.setBounds(101, 150, 119, 22);
+        modelComboRegion = new DefaultComboBoxModel<String>(Restaurante.REGIONES);
+        comboRegion.setModel(modelComboRegion);
         add(comboRegion);
         
-        spinnerDistincion = new JSpinner();
+        spinnerDistincion = new JSpinner(new SpinnerNumberModel(1, 1, 3, 1));
         spinnerDistincion.setBounds(101, 233, 45, 20);
         add(spinnerDistincion);    
         
@@ -154,13 +164,115 @@ public class ModificaRestaurante extends JPanel implements IPanel{
         btnBuscar.setBounds(311, 54, 136, 23);
         add(btnBuscar);}
 
-    public void limpiarValores(){
+    public void cargarValores(Restaurante r){
+        idRestaurante=r.getId();
+        tfNombre.setText(r.getNombre());
+        tfDireccion.setText(r.getDireccion());
+        tfTelefono.setText(r.getTelefono());
+        tfCiudad.setText(r.getCiudad());
+        tfWeb.setText(r.getWeb());
+        comboCocina.setSelectedItem(r.getCocina());
+        comboRegion.setSelectedItem(r.getRegion());
+        spinnerDistincion.setValue(r.getDistincion());
+        tfPrecioMinimo.setText(String.valueOf(r.getPrecioMinimo()));
+        tfPrecioMaximo.setText(String.valueOf(r.getPrecioMaximo()));
+    }
 
+    public void mostrarDatos(boolean mostrar){
+        tfDireccion.setEnabled(mostrar);
+        tfTelefono.setEnabled(mostrar);
+        tfCiudad.setEnabled(mostrar);
+        tfWeb.setEnabled(mostrar);
+        comboCocina.setEnabled(mostrar);
+        comboRegion.setEnabled(mostrar);
+        spinnerDistincion.setEnabled(mostrar);
+        tfPrecioMinimo.setEnabled(mostrar);
+        tfPrecioMaximo.setEnabled(mostrar);
+        btnCancelar.setEnabled(mostrar);
+        btnModificar.setEnabled(mostrar);
+        
+        lblDireccin.setEnabled(mostrar);
+        lblTelfono.setEnabled(mostrar);
+        lblDistincin.setEnabled(mostrar);
+        lblRegion.setEnabled(mostrar);
+        lblWeb.setEnabled(mostrar);
+        lblPrecioMnimo.setEnabled(mostrar);
+        lblPrecioMximo.setEnabled(mostrar);
+        lblCiudad.setEnabled(mostrar);
+        lblCocina.setEnabled(mostrar);
+    }
+
+    public void bloqueaBusqueda(boolean bloquear){
+        lblNombre.setEnabled(!bloquear);
+        tfNombre.setEnabled(!bloquear);
+        btnBuscar.setEnabled(!bloquear);
+    }
+
+    public String getNombre() {
+        String nombre=tfNombre.getText().trim();
+        if(nombre.isEmpty()){
+            mensajeError("Debe introducir un nombre","Error de datos");
+            return null;
+        }
+        return nombre;
     }
 
 
     public Restaurante leerValores(){
-        return null;
+        String nombre=tfNombre.getText().trim();
+        if(nombre.isEmpty()){
+            mensajeError("Debe introducir un nombre","Error de datos");
+            return null;
+        }
+        String direccion=tfDireccion.getText().trim();
+        String telefono=tfTelefono.getText().trim();
+        String ciudad=tfCiudad.getText().trim();
+        if(ciudad.isEmpty()){
+            mensajeError("Debe introducir una ciudad","Error de datos");
+            return null;
+        }
+        String web=tfWeb.getText().trim();
+        String cocina=(String)comboCocina.getSelectedItem();
+        String region=(String)comboRegion.getSelectedItem();
+        int distincion=(int)spinnerDistincion.getValue();
+        double precioMinimo=0;
+        double precioMaximo=0;
+        String precioMaximoString=tfPrecioMaximo.getText().trim();
+        try{
+            precioMinimo=Double.parseDouble(tfPrecioMinimo.getText().trim());
+            if(precioMaximoString.isEmpty()){
+                precioMaximo=0;
+            }
+            else{
+                precioMaximo=Double.parseDouble(precioMaximoString);
+            }
+        }catch(NumberFormatException e){
+            mensajeError("El precio debe ser un valor numérico","Error de datos");
+            return null;
+        }
+        if(precioMinimo<0 || precioMaximo<0 || precioMinimo>precioMaximo && precioMaximo!=0){
+            mensajeError("El precio minimo no puede ser mayor que el máximo","Error de datos");
+            return null;
+        }
+        Restaurante r=new Restaurante(idRestaurante,nombre,region,ciudad,distincion,direccion,precioMinimo,precioMaximo,cocina,telefono,web);
+        return r;
+    }
+
+    public void mensajeError(String mensaje,String titulo){
+        JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.ERROR_MESSAGE);
+    }
+
+    public void limpiarValores(){
+        tfNombre.setText("");
+        tfDireccion.setText("");
+        tfTelefono.setText("");
+        tfCiudad.setText("");
+        tfWeb.setText("");
+        tfPrecioMinimo.setText("");
+        tfPrecioMaximo.setText("");
+        comboCocina.setSelectedIndex(0);
+        comboRegion.setSelectedIndex(0);
+        spinnerDistincion.setValue(1);
     }
 
     @Override

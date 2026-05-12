@@ -1,0 +1,45 @@
+EJERCICIO PRÁCTICO
+Se debe crear una aplicación Web para gestionar la tabla de los libros de una base de datos
+de una biblioteca. La aplicación debe permitir listar, crear, editar y eliminar registros en una
+base de datos MySQL. Cada producto tendrá los siguientes campos:
+• id: entero autoincremental y clave primaria.
+• titulo: texto obligatorio.
+• autor: texto obligatorio.
+• precio: número decimal obligatorio, mayor que 0.
+• stock: número entero obligatorio, mayor o igual que 0.
+• fechaCreacion: Tipo fecha timestamp. Almacenamiento automático.
+
+DONE
+
+
+
+La aplicación debe incluir todas las operaciones CRUD, con las siguientes pantallas o
+procesos.
+• Listado principal: con todos los libros. DONE
+• Formulario de alta: para insertar un nuevo libro. DONE
+• Formulario de edición: con los datos precargados del libro seleccionado. DONE
+• Proceso de eliminación: con confirmación previa en el navegador. DONE
+REQUISITOS Y RESTRICCIONES:
+• Se entregan los siguientes ficheros, que hay que utilizar y completar para el
+correcto funcionamiento de la aplicación: index.php, crear.php y editar.php. DONE
+• Se entrega un fichero de texto con las sentencias SQL para la creación de la Base
+de Datos y la Tabla, así como para la inserción inicial de registros. DONE
+• En la página principal de la aplicación (index.php) se mostrará una tabla con
+todos los libros almacenados. DONE
+• Debe existir un botón o enlace para ir al formulario de inserción. DONE
+• Cada fila del listado debe tener un botón Editar y otro botón Eliminar. DONE
+• El botón Editar no puede ser un enlace con GET. Debe enviarse mediante un
+formulario POST con un campo oculto que contenga el id. DONE
+• El botón Eliminar tampoco puede ser un enlace GET. Debe enviarse mediante
+POST. DONE
+• No se permite usar GET para las acciones del CRUD. DONE
+• No es necesario validar los datos, pero, si se realiza alguna validación no se
+permite realizar la validación de los campos con PHP, debe hacerse con
+JavaScript. DONE
+• Sí se permite controlar el flujo del programa en PHP, por ejemplo, comprobar si
+la petición llega por POST o si existe un id antes de ejecutar una consulta. DONE
+• Se recomienda usar archivos separados para conexión, inserción, edición,
+actualización y borrado. DONE
+ENTREGA
+1. Se debe entregar toda la Web en un fichero comprimido, .zip o .rar.
+2. El nombre del fichero entregado deber tener el formato: Apellido1Apellido2Nombre.
