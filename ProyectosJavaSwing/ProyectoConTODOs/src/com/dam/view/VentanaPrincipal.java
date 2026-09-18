@@ -8,7 +8,7 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
-public class VentanaPrincipal extends JFrame implements IVentana{
+public class VentanaPrincipal extends JFrame{
     public static final int ANCHO = 800;
     public static final int ALTO = 500;
 

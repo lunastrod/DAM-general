@@ -1,1 +1,0 @@
-{0: [CommandHandler[callback=CameraBot.start], CommandHandler[callback=TBot.help], CommandHandler[callback=CameraBot.foto], CommandHandler[callback=CameraBot.register], CommandHandler[callback=CameraBot.unregister], CommandHandler[callback=CameraBot.cambiar_vigilancia], CommandHandler[callback=CameraBot.estado], CommandHandler[callback=CameraBot.ayuda]]}
