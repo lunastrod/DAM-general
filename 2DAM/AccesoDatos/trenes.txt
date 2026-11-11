@@ -1,0 +1,10 @@
+AVE S-102;1;12;316;330.0;Electrico;false
+AVE S-103;2;8;404;350.0;Electrico;false
+Alvia S-130;3;11;299;250.0;Electrico;false
+Talgo Avril;4;12;521;330.0;Electrico;false
+Civia 463;3;3;180;120.0;Electrico;false
+Euromed S-101;1;9;316;220.0;Electrico;false
+Alstom Coradia;2;5;250;160.0;Electrico;false
+CAF Civity;3;4;220;160.0;Diesel;false
+Talgo Intercity;4;10;350;200.0;Electrico;false
+Siemens Vectron;1;6;200;200.0;Electrico;false
